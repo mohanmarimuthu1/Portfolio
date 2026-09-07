@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohankumar Marimuthu — AI/ML Engineer</title>
+<meta name="description" content="Portfolio of Mohankumar Marimuthu — AI/ML engineer specializing in LLM hallucination detection, RAG systems, and NLP.">
+<link rel="canonical" href="https://mohanmarimuthu1.github.io/portfolio/">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mohankumar Marimuthu — AI/ML Engineer">
+<meta property="og:description" content="Portfolio of Mohankumar Marimuthu — AI/ML engineer specializing in LLM hallucination detection, RAG systems, and NLP.">
+<meta property="og:url" content="https://mohanmarimuthu1.github.io/portfolio/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mohankumar Marimuthu — AI/ML Engineer">
+<meta name="twitter:description" content="Portfolio of Mohankumar Marimuthu — AI/ML engineer specializing in LLM hallucination detection, RAG systems, and NLP.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='3' fill='%2314171C'/%3E%3Ctext x='17' y='23' font-family='Space Grotesk,sans-serif' font-size='15' font-weight='600' fill='%23C89B3C' text-anchor='middle'%3EMM%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mohankumar Marimuthu",
+  "jobTitle": "AI/ML Engineer",
+  "sameAs": [
+    "https://github.com/mohanmarimuthu1",
+    "https://linkedin.com/in/mohan-kumar-321707182"
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+/* =========================================================
+   DESIGN TOKENS
+   Edit these to reskin the whole site. See DOCUMENTATION.md
+   ========================================================= */
+:root{
+  --bg:        #14171C;   /* graphite base */
+  --surface:   #1B1F27;   /* card / raised surface */
+  --surface-2: #20242D;
+  --text:      #ECEAE3;
+  --muted:     #98A0AC;
+  --line:      rgba(152,160,172,0.18);
+
+  --accent:    #C89B3C;   /* brass — precision-instrument gold */
+  --accent-ink:#3A2E10;   /* text-on-accent */
+  --accent-2:  #5C8F86;   /* muted teal — secondary data color */
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'IBM Plex Sans', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+
+  --max: 760px;
+  --wide: 1100px;
+  --radius: 3px;
+
+  color-scheme: dark;
+}
+
+html[data-theme="light"]{
+  --bg:        #F7F5EF;
+  --surface:   #FFFFFF;
+  --surface-2: #EFEBE0;
+  --text:      #1C1E22;
+  --muted:     #5B5F6B;
+  --line:      rgba(28,30,34,0.12);
+
+  --accent:    #A9791F;
+  --accent-ink:#FFFFFF;
+  --accent-2:  #3E6A62;
+
+  color-scheme: light;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+a{ color: inherit; text-decoration: none; }
+h1,h2,h3{ font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
+p{ margin: 0; }
+
+::selection{ background: var(--accent); color: var(--accent-ink); }
+
+/* subtle grain overlay, purely decorative */
+.grain{
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  opacity: 0.025; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+.topbar{
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px clamp(20px, 5vw, 56px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.brand{
+  font-family: var(--font-mono); font-weight: 500; font-size: 15px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+}
+.topnav{ display: flex; gap: clamp(14px, 3vw, 32px); font-size: 14px; }
+.topnav a{ color: var(--muted); position: relative; padding: 4px 0; transition: color 0.2s; }
+.topnav a:hover{ color: var(--text); }
+.topnav a::after{
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0;
+  background: var(--accent); transition: width 0.25s ease;
+}
+.topnav a:hover::after{ width: 100%; }
+
+.theme-toggle{
+  background: none; border: 1px solid var(--line); border-radius: 999px;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text);
+}
+.theme-toggle svg{ fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; position: absolute; transition: opacity 0.25s ease, transform 0.3s ease; }
+.theme-toggle .icon-moon{ opacity: 0; transform: rotate(-40deg) scale(0.7); }
+html[data-theme="light"] .theme-toggle .icon-sun{ opacity: 0; transform: rotate(40deg) scale(0.7); }
+html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; }
+
+@media (max-width: 640px){ .topnav{ display: none; } }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{
+  position: relative;
+  padding: clamp(64px, 12vw, 120px) clamp(20px, 5vw, 56px) 80px;
+  max-width: var(--wide); margin: 0 auto;
+}
+.hero-inner{
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: end;
+}
+@media (max-width: 860px){ .hero-inner{ grid-template-columns: 1fr; } }
+
+.hero-kicker{
+  font-family: var(--font-mono); font-size: 13px; color: var(--accent);
+  margin-bottom: 20px;
+  opacity: 0; animation: rise 0.7s 0.05s ease forwards;
+}
+.hero-name{
+  font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 600; line-height: 1.02;
+  opacity: 0; animation: rise 0.8s 0.15s ease forwards;
+}
+.hero-lede{
+  margin-top: 24px; max-width: 46ch; color: var(--muted); font-size: 1.05rem;
+  opacity: 0; animation: rise 0.8s 0.32s ease forwards;
+}
+.hero-links{
+  margin-top: 32px; display: flex; gap: 22px; font-family: var(--font-mono); font-size: 13.5px;
+  opacity: 0; animation: rise 0.8s 0.45s ease forwards;
+}
+.hero-links a{ color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+.hero-links a:hover{ color: var(--accent); border-color: var(--accent); }
+
+@keyframes rise{
+  from{ opacity: 0; transform: translateY(14px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* readout — precision-instrument styled metrics panel */
+.readout{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0; animation: rise 0.8s 0.55s ease forwards;
+}
+.readout-cell{
+  background: var(--surface); padding: 18px 16px;
+}
+.readout-value{
+  font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 500;
+  color: var(--accent); display: block;
+}
+.readout-label{
+  font-size: 11.5px; color: var(--muted); text-transform: none; margin-top: 6px; display: block;
+  line-height: 1.35;
+}
+
+.scroll-cue{
+  position: absolute; left: clamp(20px, 5vw, 56px); bottom: -8px;
+  width: 22px; height: 36px; border: 1px solid var(--line); border-radius: 12px;
+  background: none; cursor: pointer; display: none;
+}
+@media (min-width: 641px){ .scroll-cue{ display: block; } }
+.scroll-cue span{
+  position: absolute; top: 6px; left: 50%; width: 3px; height: 7px; margin-left: -1.5px;
+  background: var(--accent); border-radius: 2px;
+  animation: cue 1.8s ease-in-out infinite;
+}
+@keyframes cue{
+  0%,100%{ transform: translateY(0); opacity: 1; }
+  50%{ transform: translateY(10px); opacity: 0.3; }
+}
+
+/* =========================================================
+   FOCUS strip
+   ========================================================= */
+.focus{
+  max-width: var(--wide); margin: 0 auto;
+  padding: 40px clamp(20px, 5vw, 56px) 0;
+  border-top: 1px solid var(--line);
+}
+.section-eyebrow{
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 10px;
+}
+.focus-text{ max-width: 62ch; color: var(--muted); font-size: 1.02rem; }
+
+/* =========================================================
+   SECTIONS (generic)
+   ========================================================= */
+.section{
+  max-width: var(--wide); margin: 0 auto;
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 56px);
+  border-top: 1px solid var(--line);
+}
+.section-title{
+  font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; margin-bottom: clamp(28px, 5vw, 44px);
+}
+.split{ display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+@media (max-width: 780px){ .split{ grid-template-columns: 1fr; } }
+
+/* =========================================================
+   TIMELINE (experience)
+   ========================================================= */
+.timeline{ display: flex; flex-direction: column; gap: 40px; }
+.tl-item{
+  display: grid; grid-template-columns: 130px 1fr; gap: 24px;
+  padding-left: 20px; border-left: 1px solid var(--line); position: relative;
+}
+.tl-item::before{
+  content: ""; position: absolute; left: -4.5px; top: 4px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+}
+.tl-date{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.tl-role{ font-size: 1.1rem; font-weight: 600; }
+.tl-org{ color: var(--accent-2); font-size: 0.95rem; margin-top: 2px; }
+.tl-points{ margin: 14px 0 0; padding: 0; list-style: none; max-width: 64ch; }
+.tl-points li{
+  position: relative; padding-left: 18px; color: var(--muted); font-size: 0.97rem; margin-bottom: 10px;
+}
+.tl-points li::before{
+  content: "—"; position: absolute; left: 0; color: var(--line); color: var(--accent-2);
+}
+@media (max-width: 640px){ .tl-item{ grid-template-columns: 1fr; } }
+
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+.project-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (max-width: 780px){ .project-grid{ grid-template-columns: 1fr; } }
+.project-card{
+  background: var(--surface); padding: 28px 26px; display: flex; flex-direction: column;
+  transition: background 0.25s ease;
+}
+.project-card:hover{ background: var(--surface-2); }
+.project-name{ font-size: 1.12rem; font-weight: 600; margin-bottom: 8px; }
+.project-desc{ color: var(--muted); font-size: 0.95rem; flex: 1; }
+.project-meta{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.tag{
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--accent-2);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+}
+.project-link{
+  margin-top: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+  border-bottom: 1px solid var(--line); width: fit-content; padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.project-link:hover{ color: var(--accent); border-color: var(--accent); }
+
+/* =========================================================
+   RESEARCH
+   ========================================================= */
+.paper-list{ display: flex; flex-direction: column; }
+.paper-item{
+  padding: 22px 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: baseline;
+}
+.paper-item:first-child{ padding-top: 0; }
+.paper-title{ font-size: 1.05rem; font-weight: 500; max-width: 60ch; }
+.paper-venue{ font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+
+/* =========================================================
+   SKILLS
+   ========================================================= */
+.skills-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+@media (max-width: 780px){ .skills-grid{ grid-template-columns: 1fr; } }
+.skill-group-title{
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 14px;
+}
+.skill-chips{ display: flex; flex-wrap: wrap; gap: 8px; }
+.chip{
+  font-size: 13.5px; padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+  color: var(--text);
+}
+
+/* =========================================================
+   EDUCATION / VOLUNTEER
+   ========================================================= */
+.edu-item{ margin-bottom: 20px; }
+.edu-degree{ font-weight: 600; font-size: 1.02rem; }
+.edu-school{ color: var(--accent-2); font-size: 0.95rem; margin-top: 2px; }
+.edu-meta{ font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.vol-item p{ color: var(--muted); font-size: 0.97rem; max-width: 50ch; }
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+.contact-grid{ display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; }
+@media (max-width: 780px){ .contact-grid{ grid-template-columns: 1fr; } }
+.contact-lede{ max-width: 50ch; color: var(--muted); margin-bottom: 32px; }
+.contact-links{ display: flex; flex-wrap: wrap; gap: 16px; }
+.contact-links a{
+  font-family: var(--font-mono); font-size: 14px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 18px; display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.contact-links a:hover{ border-color: var(--accent); color: var(--accent); background: var(--surface); }
+
+.contact-form{ display: flex; flex-direction: column; gap: 22px; }
+.field{ display: flex; flex-direction: column; gap: 8px; }
+.field label{ font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.field input, .field textarea{
+  font: inherit; font-size: 15px; color: var(--text); background: none;
+  border: none; border-bottom: 1px solid var(--line); padding: 8px 2px;
+  transition: border-color 0.2s;
+}
+.field input:focus, .field textarea:focus{ outline: none; border-color: var(--accent); }
+.field textarea{ resize: vertical; min-height: 96px; font-family: var(--font-body); }
+.hp-field{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-submit{
+  align-self: flex-start; margin-top: 6px;
+  font-family: var(--font-mono); font-size: 14px; color: var(--bg); background: var(--accent);
+  border: none; border-radius: var(--radius); padding: 13px 24px; cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+  will-change: transform;
+}
+.form-submit:hover{ background: var(--accent-2); }
+.form-submit:disabled{ opacity: 0.6; cursor: default; }
+@media (hover: none){ .form-submit{ transition: background 0.2s ease; } }
+
+.form-status{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); min-height: 1.2em; }
+.form-status[data-state="ok"]{ color: var(--accent-2); }
+.form-status[data-state="error"]{ color: var(--accent); }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer{
+  max-width: var(--wide); margin: 0 auto; padding: 32px clamp(20px, 5vw, 56px) 56px;
+  color: var(--muted); font-size: 13px;
+}
+
+/* focus visibility for keyboard users */
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+/* reveal-on-scroll for section titles/content (single subtle treatment) */
+.reveal{ opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in{ opacity: 1; transform: translateY(0); }
+
+@media print{
+  .grain, .topbar, .scroll-cue, .theme-toggle{ display: none; }
+  body{ background: #fff; color: #000; }
+  .section, .hero, .focus{ padding: 24px 0; max-width: 100%; }
+  a{ color: #000; text-decoration: underline; }
+  .reveal{ opacity: 1; transform: none; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a href="#top" class="brand">MM</a>
+  <nav class="topnav" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#research">Research</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></svg>
+  </button>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-kicker">AI / ML Engineer — Coimbatore, India</p>
+        <h1 class="hero-name">Mohankumar<br>Marimuthu</h1>
+        <p class="hero-lede">I build systems that catch large language models lying to themselves — retrieval pipelines, hallucination detectors, and agents that know what they don't know.</p>
+        <div class="hero-links" id="heroLinks"></div>
+      </div>
+      <div class="readout" id="readout" aria-label="Career metrics">
+        <!-- filled by script.js from DATA.metrics -->
+      </div>
+    </div>
+    <button class="scroll-cue" id="scrollCue" aria-label="Scroll to work">
+      <span></span>
+    </button>
+  </section>
+
+  <!-- FOCUS -->
+  <section class="focus">
+    <p class="section-eyebrow">Currently</p>
+    <p class="focus-text" id="focusText"></p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work" class="section">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
+    <div class="project-grid" id="projectGrid"></div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" class="section">
+    <h2 class="section-title">Research</h2>
+    <div class="paper-list" id="paperList"></div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </section>
+
+  <!-- EDUCATION & VOLUNTEERING -->
+  <section class="section split">
+    <div>
+      <h2 class="section-title">Education</h2>
+      <div id="educationList"></div>
+    </div>
+    <div>
+      <h2 class="section-title">Beyond work</h2>
+      <div id="volunteerList"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-lede">Open to AI/ML, NLP, and applied research roles. The fastest way to reach me is email — or send a message directly below.</p>
+        <div class="contact-links" id="contactLinks"></div>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120">
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="200">
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" required maxlength="4000"></textarea>
+        </div>
+        <!-- honeypot: hidden from people, bots tend to fill every field -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="cf-topic">Topic</label>
+          <input id="cf-topic" name="topic" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY"></div>
+        <button type="submit" class="form-submit" id="cfSubmit">Send message</button>
+        <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Built by Mohankumar Marimuthu. <span id="year"></span></p>
+</footer>
+
+<script>
+/* =========================================================
+   ALL SITE CONTENT LIVES HERE.
+   Edit this object to change what appears on the page.
+   See DOCUMENTATION.md for the full field-by-field guide.
+   ========================================================= */
+const DATA = {
+  socials: {
+    // split to blunt naive mailto-regex scrapers; joined at render time
+    emailUser: "mohankumar62768",
+    emailDomain: "gmail.com",
+    github: "https://github.com/mohanmarimuthu1",
+    linkedin: "https://linkedin.com/in/mohan-kumar-321707182"
+  },
+
+  metrics: [
+    { value: "92%", label: "hallucination-flagging precision" },
+    { value: "40%", label: "hallucination rate reduction" },
+    { value: "88.7%", label: "interview-analysis accuracy" },
+    { value: "1–7ms", label: "CPU intent-classifier inference" }
+  ],
+
+  focus: "Researching how to catch large language models when they're confidently wrong — retrieval grounding, uncertainty signals, and evaluation frameworks. Currently applying to AI/ML/NLP roles in India, with a deferred MS in AI at Northeastern University lined up for 2027.",
+
+  experience: [
+    {
+      date: "Oct — Nov 2024",
+      role: "Artificial Intelligence Intern",
+      org: "Prime Solutions",
+      points: [
+        "Built a conversational recommendation agent that clarifies, recommends, refines, and compares options through dialogue instead of keyword search.",
+        "Implemented FAISS semantic retrieval over 338 catalog embeddings (MiniLM), grounded strictly to a validated catalog to eliminate hallucinated results.",
+        "Enforced schema compliance and guardrails — off-topic refusal, prompt-injection resistance — via FastAPI + Pydantic, validated by a 25-test automated suite."
+      ]
+    },
+    {
+      date: "Dec 2023 — Jan 2024",
+      role: "Artificial Intelligence Intern",
+      org: "Altitudes Solutions",
+      points: [
+        "Designed and built a RAG chatbot from scratch (no ML libraries) over a 192K-message dataset, with custom TF-IDF retrieval and cosine-similarity topic detection.",
+        "Engineered sliding-window topic segmentation — 526 topics, 1,919 checkpoints — plus a rule-based persona extraction layer for habits and communication style.",
+        "Served the pipeline via a Flask REST API with Claude Sonnet 4 as a grounded generator, falling back to rule-based responses with no API key."
+      ]
+    }
+  ],
+
+  projects: [
+    {
+      name: "HAL-RAG — Hallucination Detection & Mitigation",
+      desc: "Dual-stage validation pipeline that cross-references LLM outputs against a retrieval-augmented knowledge base to catch factual inconsistencies in real time. Published as an IEEE paper.",
+      tags: ["Python", "RAG", "NLP"],
+      link: "https://github.com/mohanmarimuthu1/HALLUCINATION-DETECTION"
+    },
+    {
+      name: "Persona Drift & Conflict Detection Engine",
+      desc: "Bins conversations into day-buckets and scores sentiment plus topic shift to flag mood change over time. Contradiction-resolving RAG pipeline with NLI cross-encoder scoring, containerized end-to-end.",
+      tags: ["Flask", "ChromaDB", "MiniLM", "Docker", "NLI"],
+      link: "https://github.com/mohanmarimuthu1/Persona-drift"
+    },
+    {
+      name: "Multi-Modal Interview Performance Analyzer",
+      desc: "Transformer-based feature fusion across text, audio, and video to evaluate interview performance, tracking 15+ behavioral and tonal markers into a full scorecard in under 60 seconds.",
+      tags: ["PyTorch", "TensorFlow", "Computer Vision"],
+      link: "https://github.com/mohanmarimuthu1/Interview_Analyzer"
+    },
+    {
+      name: "Conversational Assessment Recommender",
+      desc: "Agent that recommends and compares assessment options through natural dialogue, grounded to a validated catalog via FAISS retrieval to prevent hallucinated recommendations.",
+      tags: ["FastAPI", "FAISS", "Pydantic"],
+      link: "https://github.com/mohanmarimuthu1/conversational-Assessment-Recommender"
+    },
+    {
+      name: "RAG Chatbot from Scratch",
+      desc: "A retrieval-augmented chatbot built without ML libraries — custom TF-IDF retrieval and cosine-similarity topic detection over a 192K-message dataset.",
+      tags: ["Python", "TF-IDF", "Flask"],
+      link: "https://github.com/mohanmarimuthu1/RAG_CHATBOT"
+    },
+    {
+      name: "MohanFlix",
+      desc: "A personal streaming app built for his parents, with a Tamil/English language toggle — Node/Express and FFmpeg transcoding to HLS, self-hosted on Oracle Cloud.",
+      tags: ["Node.js", "FFmpeg", "HLS", "Oracle Cloud"],
+      link: null
+    }
+  ],
+
+  papers: [
+    {
+      title: "HAL-RAG: A Retrieval-Augmented Framework for Detecting and Mitigating Hallucinations in Large Language Model Responses",
+      venue: "IEEE"
+    },
+    {
+      title: "A Real-Time Multi-Model System for Personality and Interview Performance Analysis Using Transformer-Based Feature Fusion",
+      venue: "IEEE"
+    }
+  ],
+
+  skills: [
+    { group: "AI / ML", items: ["LLM Orchestration", "RAG", "NLP", "Prompt Engineering", "Vector Search", "TF-IDF", "NLI"] },
+    { group: "Languages", items: ["Python", "C", "Java", "JavaScript", "SQL", "HTML/CSS"] },
+    { group: "Frameworks / Tools", items: ["PyTorch", "TensorFlow", "Flask", "FastAPI", "Docker", "Git", "AWS", "n8n"] }
+  ],
+
+  education: [
+    {
+      degree: "B.Tech, Artificial Intelligence & Data Science",
+      school: "Karpagam Academy of Higher Education",
+      meta: "2022 — 2026 · CGPA 8.2"
+    },
+    {
+      degree: "MS, Artificial Intelligence (incoming)",
+      school: "Northeastern University, Khoury College",
+      meta: "Deferred to Fall 2027"
+    }
+  ],
+
+  volunteering: [
+    {
+      text: "Volunteers with Make A Difference in Coimbatore, tutoring underprivileged students."
+    }
+  ]
+};
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function el(tag, className, html){
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function renderHero(){
+  const links = document.getElementById("heroLinks");
+  links.innerHTML = `
+    <a href="mailto:${DATA.socials.emailUser}@${DATA.socials.emailDomain}">Email</a>
+    <a href="${DATA.socials.github}" target="_blank" rel="noopener">GitHub</a>
+    <a href="${DATA.socials.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+  `;
+
+  const readout = document.getElementById("readout");
+  DATA.metrics.forEach(m => {
+    const cell = el("div", "readout-cell");
+    cell.append(el("span", "readout-value", m.value), el("span", "readout-label", m.label));
+    readout.append(cell);
+  });
+}
+
+function renderFocus(){
+  document.getElementById("focusText").textContent = DATA.focus;
+}
+
+function renderTimeline(){
+  const wrap = document.getElementById("timeline");
+  DATA.experience.forEach(job => {
+    const item = el("div", "tl-item reveal");
+    item.append(el("span", "tl-date", job.date));
+    const right = el("div");
+    right.append(
+      el("div", "tl-role", job.role),
+      el("div", "tl-org", job.org)
+    );
+    const ul = el("ul", "tl-points");
+    job.points.forEach(p => ul.append(el("li", null, p)));
+    right.append(ul);
+    item.append(right);
+    wrap.append(item);
+  });
+}
+
+function renderProjects(){
+  const grid = document.getElementById("projectGrid");
+  DATA.projects.forEach(p => {
+    const card = el("div", "project-card reveal");
+    card.append(el("div", "project-name", p.name));
+    card.append(el("p", "project-desc", p.desc));
+    const meta = el("div", "project-meta");
+    p.tags.forEach(t => meta.append(el("span", "tag", t)));
+    card.append(meta);
+    if (p.link){
+      const a = document.createElement("a");
+      a.href = p.link; a.target = "_blank"; a.rel = "noopener";
+      a.className = "project-link"; a.textContent = "View source";
+      card.append(a);
+    }
+    grid.append(card);
+  });
+}
+
+function renderPapers(){
+  const list = document.getElementById("paperList");
+  DATA.papers.forEach(p => {
+    const item = el("div", "paper-item reveal");
+    item.append(el("div", "paper-title", p.title));
+    item.append(el("div", "paper-venue", p.venue));
+    list.append(item);
+  });
+}
+
+function renderSkills(){
+  const grid = document.getElementById("skillsGrid");
+  DATA.skills.forEach(group => {
+    const col = el("div", "reveal");
+    col.append(el("div", "skill-group-title", group.group));
+    const chips = el("div", "skill-chips");
+    group.items.forEach(i => chips.append(el("span", "chip", i)));
+    col.append(chips);
+    grid.append(col);
+  });
+}
+
+function renderEducation(){
+  const list = document.getElementById("educationList");
+  DATA.education.forEach(e => {
+    const item = el("div", "edu-item reveal");
+    item.append(el("div", "edu-degree", e.degree));
+    item.append(el("div", "edu-school", e.school));
+    item.append(el("div", "edu-meta", e.meta));
+    list.append(item);
+  });
+}
+
+function renderVolunteering(){
+  const list = document.getElementById("volunteerList");
+  DATA.volunteering.forEach(v => {
+    const item = el("div", "vol-item reveal");
+    item.append(el("p", null, v.text));
+    list.append(item);
+  });
+}
+
+function renderContact(){
+  const wrap = document.getElementById("contactLinks");
+  wrap.innerHTML = `
+    <a href="mailto:${DATA.socials.emailUser}@${DATA.socials.emailDomain}">Email</a>
+    <a href="${DATA.socials.github}" target="_blank" rel="noopener">GitHub</a>
+    <a href="${DATA.socials.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+  `;
+}
+
+/* =========================================================
+   THEME TOGGLE — persists for the session only
+   ========================================================= */
+function initTheme(){
+  const root = document.documentElement;
+  const stored = window.__theme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  root.setAttribute("data-theme", stored);
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next);
+    window.__theme = next;
+  });
+}
+
+/* =========================================================
+   SCROLL REVEAL — one subtle, consistent treatment
+   ========================================================= */
+function initReveal(){
+  const items = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)){
+    items.forEach(i => i.classList.add("in"));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(i => io.observe(i));
+}
+
+function initScrollCue(){
+  const cue = document.getElementById("scrollCue");
+  if (!cue) return;
+  cue.addEventListener("click", () => {
+    document.getElementById("work").scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+/* =========================================================
+   MAGNETIC CTA — one signature interaction, scoped to the
+   contact form's submit button. No-op on touch or when the
+   visitor's OS asks for reduced motion.
+   ========================================================= */
+function initMagneticButton(){
+  const btn = document.getElementById("cfSubmit");
+  if (!btn) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const noHover = window.matchMedia("(hover: none)").matches;
+  if (reduceMotion || noHover) return;
+
+  btn.addEventListener("mousemove", (e) => {
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width / 2;
+    const y = e.clientY - r.top - r.height / 2;
+    btn.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
+  });
+  btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+}
+
+/* =========================================================
+   CONTACT FORM — posts to a Cloudflare Pages Function
+   (functions/api/contact.js). See DOCUMENTATION.md.
+   ========================================================= */
+function initContactForm(){
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+  const status = document.getElementById("cfStatus");
+  const submit = document.getElementById("cfSubmit");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    const topic = form.topic.value; // honeypot — should stay empty
+
+    if (!name || !email || !message){
+      status.dataset.state = "error";
+      status.textContent = "Fill in every field before sending.";
+      return;
+    }
+
+    const turnstileToken = window.turnstile
+      ? window.turnstile.getResponse()
+      : "";
+
+    submit.disabled = true;
+    status.dataset.state = "";
+    status.textContent = "Sending…";
+
+    try{
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, topic, turnstileToken })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.ok){
+        status.dataset.state = "ok";
+        status.textContent = "Message sent — thanks, I'll reply by email.";
+        form.reset();
+        if (window.turnstile) window.turnstile.reset();
+      } else {
+        throw new Error(data.error || "send_failed");
+      }
+    } catch {
+      status.dataset.state = "error";
+      status.textContent = "Couldn't send that — please email me directly instead.";
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
+document.getElementById("year") && (document.getElementById("year").textContent = new Date().getFullYear());
+
+renderHero();
+renderFocus();
+renderTimeline();
+renderProjects();
+renderPapers();
+renderSkills();
+renderEducation();
+renderVolunteering();
+renderContact();
+initTheme();
+initReveal();
+initScrollCue();
+initMagneticButton();
+initContactForm();
+
+</script>
+</body>
+</html>
