@@ -2,12 +2,25 @@
 DOCUMENTATION.md
 plan.md
 process.md
-MY_RESUME.pdf
 *.jpg
 *.jpeg
 *.png
 *.gif
 *.heic
+*.webp
+
+# ...except the assets the published site actually serves. The résumé is
+# linked from the page, so it has to ship — note it contains a phone number.
+!portrait.jpg
+!portrait.webp
+# ...and the responsive variants the hero <picture>/preload srcsets point at.
+# Without these the srcset candidates 404 in production and the LCP image
+# never paints.
+!portrait-400.jpg
+!portrait-400.webp
+!portrait-600.jpg
+!portrait-600.webp
+!Mohankumar-Marimuthu-Resume.pdf
 
 # Secrets — never commit
 .env

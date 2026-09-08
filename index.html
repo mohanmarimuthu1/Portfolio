@@ -12,11 +12,16 @@
 <meta property="og:title" content="Mohankumar Marimuthu — AI/ML Engineer">
 <meta property="og:description" content="Portfolio of Mohankumar Marimuthu — AI/ML engineer specializing in LLM hallucination detection, RAG systems, and NLP.">
 <meta property="og:url" content="https://mohanmarimuthu1.github.io/portfolio/">
+<meta property="og:image" content="https://mohanmarimuthu1.github.io/portfolio/portrait.jpg">
+<meta property="og:image:alt" content="Mohankumar Marimuthu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mohanmarimuthu1.github.io/portfolio/portrait.jpg">
 <meta name="twitter:title" content="Mohankumar Marimuthu — AI/ML Engineer">
 <meta name="twitter:description" content="Portfolio of Mohankumar Marimuthu — AI/ML engineer specializing in LLM hallucination detection, RAG systems, and NLP.">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='3' fill='%2314171C'/%3E%3Ctext x='17' y='23' font-family='Space Grotesk,sans-serif' font-size='15' font-weight='600' fill='%23C89B3C' text-anchor='middle'%3EMM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='4' fill='%23DEDDD7'/%3E%3Crect x='2.5' y='2.5' width='29' height='29' rx='4' fill='none' stroke='%2322252A' stroke-opacity='0.45' stroke-width='1.4'/%3E%3Ctext x='17' y='23' font-family='Space Grotesk,sans-serif' font-size='15' font-weight='600' fill='%232A4E76' text-anchor='middle'%3EMM%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#DEDDD7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#23262B" media="(prefers-color-scheme: dark)">
 
 <script type="application/ld+json">
 {
@@ -31,6 +36,13 @@
 }
 </script>
 
+<!-- the portrait is the largest thing above the fold, so start it early
+     rather than waiting for the parser to reach the <picture> -->
+<link rel="preload" as="image" type="image/webp" fetchpriority="high"
+      href="portrait-600.webp"
+      imagesrcset="portrait-400.webp 400w, portrait-600.webp 600w, portrait.webp 760w"
+      imagesizes="(max-width: 860px) 196px, 296px">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Fonts are fetched at high priority but applied without blocking the first
@@ -43,23 +55,48 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<script>
+/* Resolve the theme before the first paint rather than at the end of the
+   body, so the page never flashes the wrong stock. initTheme() picks this
+   up from window.__theme and only has to wire the toggle. */
+(function(){
+  var t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", t);
+  window.__theme = t;
+})();
+</script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 /* =========================================================
-   DESIGN TOKENS
+   DESIGN TOKENS — "paper and graphite"
+   The page is a working notebook: grey stock, pencil marks,
+   blue pen for links and figures, red pencil for annotations.
    Edit these to reskin the whole site. See DOCUMENTATION.md
    ========================================================= */
-:root{
-  --bg:        #14171C;   /* graphite base */
-  --surface:   #1B1F27;   /* card / raised surface */
-  --surface-2: #20242D;
-  --text:      #ECEAE3;
-  --muted:     #98A0AC;
-  --line:      rgba(152,160,172,0.18);
+:root, html[data-theme="light"]{
+  --bg:        #DEDDD7;   /* grey sugar-paper stock */
+  --surface:   #EBEAE4;   /* a lighter sheet laid on the page */
+  --surface-2: #D3D2CA;
+  --text:      #22252A;   /* graphite — pencil is never actually black */
+  --muted:     #55595F;
+  --line:      rgba(34,37,42,0.30);   /* a ruled pencil line */
+  --line-soft: rgba(34,37,42,0.16);
 
-  --accent:    #C89B3C;   /* brass — precision-instrument gold */
-  --accent-ink:#3A2E10;   /* text-on-accent */
-  --accent-2:  #5C8F86;   /* muted teal — secondary data color */
+  --accent:    #2A4E76;   /* blue pen — links, figures, focus */
+  --accent-ink:#F4F3EF;   /* text-on-accent */
+  --accent-2:  #8B3524;   /* red pencil — annotations only, used sparingly */
+
+  --paper-blend: multiply;  /* how the grain sits on the page */
+  --paper-alpha: 0.055;
+  --shadow: 0 1px 2px rgba(34,37,42,0.10), 0 6px 18px rgba(34,37,42,0.10);
+
+  /* A hairline with a human wobble, stretched to whatever it sits on.
+     Stroke colour has to be baked in, so the dark theme overrides it. */
+  --rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 10' preserveAspectRatio='none'%3E%3Cg%3E%3Cpath d='M0 3.14C42.9 3.14 42.9 3.81 85.7 3.81C128.6 3.81 128.6 3.63 171.4 3.63C214.3 3.63 214.3 3.35 257.1 3.35C300.0 3.35 300.0 6.3 342.9 6.3C385.8 6.3 385.8 5.99 428.6 5.99C471.4 5.99 471.4 6.97 514.3 6.97C557.1 6.97 557.1 6.83 600 6.83C642.9 6.83 642.9 4.3 685.7 4.3C728.5 4.3 728.5 4.11 771.4 4.11C814.3 4.11 814.3 3 857.1 3C900.0 3 900.0 2.57 942.9 2.57C985.8 2.57 985.8 5.51 1028.6 5.51C1071.4 5.51 1071.4 5.2 1114.3 5.2C1157.2 5.2 1157.2 6.69 1200 6.69' fill='none' stroke='%2322252A' stroke-opacity='0.42' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M0 6.58C42.9 6.58 42.9 7.86 85.7 7.86C128.6 7.86 128.6 6.46 171.4 6.46C214.3 6.46 214.3 6.07 257.1 6.07C300.0 6.07 300.0 4.98 342.9 4.98C385.8 4.98 385.8 3.45 428.6 3.45C471.4 3.45 471.4 4.83 514.3 4.83C557.1 4.83 557.1 4.19 600 4.19C642.9 4.19 642.9 5.68 685.7 5.68C728.5 5.68 728.5 7.5 771.4 7.5C814.3 7.5 814.3 6.72 857.1 6.72C900.0 6.72 900.0 7.17 942.9 7.17C985.8 7.17 985.8 5.75 1028.6 5.75C1071.4 5.75 1071.4 4.09 1114.3 4.09C1157.2 4.09 1157.2 4.44 1200 4.44' fill='none' stroke='%2322252A' stroke-opacity='0.21' stroke-width='0.9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+  --rule-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 1200' preserveAspectRatio='none'%3E%3Cg transform='matrix(0 1 1 0 0 0)'%3E%3Cpath d='M0 3.14C42.9 3.14 42.9 3.81 85.7 3.81C128.6 3.81 128.6 3.63 171.4 3.63C214.3 3.63 214.3 3.35 257.1 3.35C300.0 3.35 300.0 6.3 342.9 6.3C385.8 6.3 385.8 5.99 428.6 5.99C471.4 5.99 471.4 6.97 514.3 6.97C557.1 6.97 557.1 6.83 600 6.83C642.9 6.83 642.9 4.3 685.7 4.3C728.5 4.3 728.5 4.11 771.4 4.11C814.3 4.11 814.3 3 857.1 3C900.0 3 900.0 2.57 942.9 2.57C985.8 2.57 985.8 5.51 1028.6 5.51C1071.4 5.51 1071.4 5.2 1114.3 5.2C1157.2 5.2 1157.2 6.69 1200 6.69' fill='none' stroke='%2322252A' stroke-opacity='0.42' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M0 6.58C42.9 6.58 42.9 7.86 85.7 7.86C128.6 7.86 128.6 6.46 171.4 6.46C214.3 6.46 214.3 6.07 257.1 6.07C300.0 6.07 300.0 4.98 342.9 4.98C385.8 4.98 385.8 3.45 428.6 3.45C471.4 3.45 471.4 4.83 514.3 4.83C557.1 4.83 557.1 4.19 600 4.19C642.9 4.19 642.9 5.68 685.7 5.68C728.5 5.68 728.5 7.5 771.4 7.5C814.3 7.5 814.3 6.72 857.1 6.72C900.0 6.72 900.0 7.17 942.9 7.17C985.8 7.17 985.8 5.75 1028.6 5.75C1071.4 5.75 1071.4 4.09 1114.3 4.09C1157.2 4.09 1157.2 4.44 1200 4.44' fill='none' stroke='%2322252A' stroke-opacity='0.21' stroke-width='0.9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+  /* same stroke at full alpha — for masking, where the colour comes from
+     background-color and only the shape matters. Theme-independent. */
+  --rule-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 10' preserveAspectRatio='none'%3E%3Cg%3E%3Cpath d='M0 3.14C42.9 3.14 42.9 3.81 85.7 3.81C128.6 3.81 128.6 3.63 171.4 3.63C214.3 3.63 214.3 3.35 257.1 3.35C300.0 3.35 300.0 6.3 342.9 6.3C385.8 6.3 385.8 5.99 428.6 5.99C471.4 5.99 471.4 6.97 514.3 6.97C557.1 6.97 557.1 6.83 600 6.83C642.9 6.83 642.9 4.3 685.7 4.3C728.5 4.3 728.5 4.11 771.4 4.11C814.3 4.11 814.3 3 857.1 3C900.0 3 900.0 2.57 942.9 2.57C985.8 2.57 985.8 5.51 1028.6 5.51C1071.4 5.51 1071.4 5.2 1114.3 5.2C1157.2 5.2 1157.2 6.69 1200 6.69' fill='none' stroke='%23000000' stroke-opacity='1' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M0 6.58C42.9 6.58 42.9 7.86 85.7 7.86C128.6 7.86 128.6 6.46 171.4 6.46C214.3 6.46 214.3 6.07 257.1 6.07C300.0 6.07 300.0 4.98 342.9 4.98C385.8 4.98 385.8 3.45 428.6 3.45C471.4 3.45 471.4 4.83 514.3 4.83C557.1 4.83 557.1 4.19 600 4.19C642.9 4.19 642.9 5.68 685.7 5.68C728.5 5.68 728.5 7.5 771.4 7.5C814.3 7.5 814.3 6.72 857.1 6.72C900.0 6.72 900.0 7.17 942.9 7.17C985.8 7.17 985.8 5.75 1028.6 5.75C1071.4 5.75 1071.4 4.09 1114.3 4.09C1157.2 4.09 1157.2 4.44 1200 4.44' fill='none' stroke='%23000000' stroke-opacity='0.50' stroke-width='0.9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body:    'IBM Plex Sans', sans-serif;
@@ -69,25 +106,38 @@
   --wide: 1100px;
   --radius: 3px;
 
-  color-scheme: dark;
-}
-
-html[data-theme="light"]{
-  --bg:        #F7F5EF;
-  --surface:   #FFFFFF;
-  --surface-2: #EFEBE0;
-  --text:      #1C1E22;
-  --muted:     #5B5F6B;
-  --line:      rgba(28,30,34,0.12);
-
-  /* darker than the dark-theme brass: on a cream background the lighter
-     tone only reached 3.5:1, below AA for the 13px mono labels and the
-     submit button that sits on it. #8C6317 clears 4.5:1 both ways. */
-  --accent:    #8C6317;
-  --accent-ink:#FFFFFF;
-  --accent-2:  #3E6A62;
+  /* Nothing drawn by hand closes on itself perfectly. Three scales so a
+     chip and a photo frame don't wear the same corner. */
+  --sketch-sm:     10px 3px 9px 4px / 4px 9px 3px 10px;
+  --sketch-sm-alt: 4px 11px 3px 8px / 9px 4px 10px 3px;
+  --sketch-md:     18px 6px 14px 8px / 8px 14px 6px 18px;
+  --sketch-lg:     34px 10px 26px 14px / 14px 26px 10px 34px;
 
   color-scheme: light;
+}
+
+html[data-theme="dark"]{
+  /* the same notebook after dark — slate stock, chalk instead of graphite */
+  --bg:        #23262B;
+  --surface:   #2B2F35;
+  --surface-2: #33373E;
+  --text:      #E4E2DB;
+  --muted:     #A0A5AD;
+  --line:      rgba(228,226,219,0.28);
+  --line-soft: rgba(228,226,219,0.14);
+
+  --accent:    #8FB4DC;   /* blue chalk */
+  --accent-ink:#1A1D21;
+  --accent-2:  #DB9280;   /* red chalk */
+
+  --paper-blend: overlay;
+  --paper-alpha: 0.05;
+  --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 6px 20px rgba(0,0,0,0.32);
+
+  --rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 10' preserveAspectRatio='none'%3E%3Cg%3E%3Cpath d='M0 3.14C42.9 3.14 42.9 3.81 85.7 3.81C128.6 3.81 128.6 3.63 171.4 3.63C214.3 3.63 214.3 3.35 257.1 3.35C300.0 3.35 300.0 6.3 342.9 6.3C385.8 6.3 385.8 5.99 428.6 5.99C471.4 5.99 471.4 6.97 514.3 6.97C557.1 6.97 557.1 6.83 600 6.83C642.9 6.83 642.9 4.3 685.7 4.3C728.5 4.3 728.5 4.11 771.4 4.11C814.3 4.11 814.3 3 857.1 3C900.0 3 900.0 2.57 942.9 2.57C985.8 2.57 985.8 5.51 1028.6 5.51C1071.4 5.51 1071.4 5.2 1114.3 5.2C1157.2 5.2 1157.2 6.69 1200 6.69' fill='none' stroke='%23E4E2DB' stroke-opacity='0.36' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M0 6.58C42.9 6.58 42.9 7.86 85.7 7.86C128.6 7.86 128.6 6.46 171.4 6.46C214.3 6.46 214.3 6.07 257.1 6.07C300.0 6.07 300.0 4.98 342.9 4.98C385.8 4.98 385.8 3.45 428.6 3.45C471.4 3.45 471.4 4.83 514.3 4.83C557.1 4.83 557.1 4.19 600 4.19C642.9 4.19 642.9 5.68 685.7 5.68C728.5 5.68 728.5 7.5 771.4 7.5C814.3 7.5 814.3 6.72 857.1 6.72C900.0 6.72 900.0 7.17 942.9 7.17C985.8 7.17 985.8 5.75 1028.6 5.75C1071.4 5.75 1071.4 4.09 1114.3 4.09C1157.2 4.09 1157.2 4.44 1200 4.44' fill='none' stroke='%23E4E2DB' stroke-opacity='0.18' stroke-width='0.9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+  --rule-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 1200' preserveAspectRatio='none'%3E%3Cg transform='matrix(0 1 1 0 0 0)'%3E%3Cpath d='M0 3.14C42.9 3.14 42.9 3.81 85.7 3.81C128.6 3.81 128.6 3.63 171.4 3.63C214.3 3.63 214.3 3.35 257.1 3.35C300.0 3.35 300.0 6.3 342.9 6.3C385.8 6.3 385.8 5.99 428.6 5.99C471.4 5.99 471.4 6.97 514.3 6.97C557.1 6.97 557.1 6.83 600 6.83C642.9 6.83 642.9 4.3 685.7 4.3C728.5 4.3 728.5 4.11 771.4 4.11C814.3 4.11 814.3 3 857.1 3C900.0 3 900.0 2.57 942.9 2.57C985.8 2.57 985.8 5.51 1028.6 5.51C1071.4 5.51 1071.4 5.2 1114.3 5.2C1157.2 5.2 1157.2 6.69 1200 6.69' fill='none' stroke='%23E4E2DB' stroke-opacity='0.36' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M0 6.58C42.9 6.58 42.9 7.86 85.7 7.86C128.6 7.86 128.6 6.46 171.4 6.46C214.3 6.46 214.3 6.07 257.1 6.07C300.0 6.07 300.0 4.98 342.9 4.98C385.8 4.98 385.8 3.45 428.6 3.45C471.4 3.45 471.4 4.83 514.3 4.83C557.1 4.83 557.1 4.19 600 4.19C642.9 4.19 642.9 5.68 685.7 5.68C728.5 5.68 728.5 7.5 771.4 7.5C814.3 7.5 814.3 6.72 857.1 6.72C900.0 6.72 900.0 7.17 942.9 7.17C985.8 7.17 985.8 5.75 1028.6 5.75C1071.4 5.75 1071.4 4.09 1114.3 4.09C1157.2 4.09 1157.2 4.44 1200 4.44' fill='none' stroke='%23E4E2DB' stroke-opacity='0.18' stroke-width='0.9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+
+  color-scheme: dark;
 }
 
 *{ box-sizing: border-box; }
@@ -114,11 +164,24 @@ p{ margin: 0; }
 
 ::selection{ background: var(--accent); color: var(--accent-ink); }
 
-/* subtle grain overlay, purely decorative */
+/* paper fibre — lower frequency and more octaves than a film grain, so it
+   reads as stock rather than noise. Multiplied into the page on paper,
+   overlaid on slate. */
 .grain{
   position: fixed; inset: 0; pointer-events: none; z-index: 999;
-  opacity: 0.025; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--paper-alpha); mix-blend-mode: var(--paper-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* A ruled line with a human wobble, used everywhere a hairline divider
+   used to be. Stretched to the element's width, so no two are identical
+   in length and none of them are perfectly straight. */
+.ruled-top{
+  border-top: none;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 9px;
 }
 
 /* =========================================================
@@ -128,27 +191,39 @@ p{ margin: 0; }
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px clamp(20px, 5vw, 56px);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: none;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 9px;
 }
 .brand{
   font-family: var(--font-mono); font-weight: 500; font-size: 15px;
-  border: 1px solid var(--line); border-radius: var(--radius);
+  border: 1.5px solid var(--line); border-radius: var(--sketch-sm);
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
 }
 .topnav{ display: flex; gap: clamp(14px, 3vw, 32px); font-size: 14px; }
 .topnav a{ color: var(--muted); position: relative; padding: 4px 0; transition: color 0.2s; }
 .topnav a:hover{ color: var(--text); }
+/* underline drawn rather than ruled — same wobble as the section rules,
+   tinted to the pen colour */
 .topnav a::after{
-  content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0;
-  background: var(--accent); transition: width 0.25s ease;
+  content: ""; position: absolute; left: 0; bottom: 0; height: 9px; width: 0;
+  background-color: var(--accent);
+  -webkit-mask-image: var(--rule-mask); mask-image: var(--rule-mask);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  transition: width 0.25s ease;
 }
 .topnav a:hover::after{ width: 100%; }
 
 .theme-toggle{
   position: relative; /* containing block for the two stacked icons below */
-  background: none; border: 1px solid var(--line); border-radius: 999px;
+  background: none; border: 1.5px solid var(--line);
+  /* a circle drawn freehand doesn't quite meet itself */
+  border-radius: 48% 52% 51% 49% / 52% 48% 52% 48%;
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; color: var(--text);
 }
@@ -175,50 +250,91 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .hero-kicker{
   font-family: var(--font-mono); font-size: 13px; color: var(--accent);
   margin-bottom: 20px;
-  opacity: 0; animation: rise 0.7s 0.05s ease forwards;
+  opacity: 0; animation: rise 0.6s 0.04s ease forwards;
 }
 .hero-name{
   font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 600; line-height: 1.02;
-  opacity: 0; animation: rise 0.8s 0.15s ease forwards;
+  opacity: 0; animation: rise 0.65s 0.08s ease forwards;
 }
 .hero-lede{
   margin-top: 24px; max-width: 46ch; color: var(--muted); font-size: 1.05rem;
-  opacity: 0; animation: rise 0.8s 0.32s ease forwards;
+  opacity: 0; animation: rise 0.65s 0.14s ease forwards;
 }
 .hero-links{
   margin-top: 32px; display: flex; gap: 22px; font-family: var(--font-mono); font-size: 13.5px;
-  opacity: 0; animation: rise 0.8s 0.45s ease forwards;
+  opacity: 0; animation: rise 0.65s 0.22s ease forwards;
 }
-.hero-links a{ color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
-.hero-links a:hover{ color: var(--accent); border-color: var(--accent); }
+.hero-links a{
+  position: relative; color: var(--muted); padding-bottom: 6px; transition: color 0.2s;
+}
+/* underlined by hand on hover, not with a border */
+.hero-links a::after{
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 9px;
+  background-color: var(--accent); opacity: 0;
+  -webkit-mask-image: var(--rule-mask); mask-image: var(--rule-mask);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  transition: opacity 0.2s ease;
+}
+.hero-links a:hover{ color: var(--accent); }
+.hero-links a:hover::after{ opacity: 1; }
 
 @keyframes rise{
   from{ opacity: 0; transform: translateY(14px); }
   to{ opacity: 1; transform: translateY(0); }
 }
 
-/* readout — precision-instrument styled metrics panel */
+/* =========================================================
+   HERO PORTRAIT — the one place the page raises its voice.
+   A print laid on the page: paper mount, hand-drawn edge, a
+   half-degree off square, lifted just enough to cast a shadow.
+   ========================================================= */
+.hero-photo{
+  justify-self: center; width: 100%; max-width: 320px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--sketch-lg);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  transform: rotate(-0.55deg);
+  opacity: 0; animation: rise 0.7s 0.30s ease forwards;
+}
+.hero-photo img{
+  display: block; width: 100%; height: auto;
+  border-radius: var(--sketch-md);
+  /* the print itself, very slightly counter-rotated inside its mount */
+  transform: rotate(0.3deg);
+}
+@media (max-width: 860px){
+  .hero-photo{ max-width: 220px; justify-self: start; }
+}
+
+/* metrics — moved out of the hero and set as a row of figures pencilled
+   into the margin of the "Currently" note */
 .readout{
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
-  overflow: hidden;
-  opacity: 0; animation: rise 0.8s 0.55s ease forwards;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 3vw, 36px);
+  margin-top: 36px; padding-top: 22px;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 9px;
 }
-.readout-cell{
-  background: var(--surface); padding: 18px 16px;
-}
+@media (max-width: 780px){ .readout{ grid-template-columns: repeat(2, 1fr); gap: 24px 20px; } }
+.readout-cell{ min-width: 0; }
 .readout-value{
-  font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 500;
-  color: var(--accent); display: block;
+  font-family: var(--font-mono); font-size: clamp(1.35rem, 2.6vw, 1.75rem); font-weight: 500;
+  color: var(--accent); display: block; line-height: 1.1;
 }
 .readout-label{
-  font-size: 11.5px; color: var(--muted); text-transform: none; margin-top: 6px; display: block;
-  line-height: 1.35;
+  font-size: 11.5px; color: var(--muted); margin-top: 8px; display: block;
+  line-height: 1.35; max-width: 22ch;
 }
 
 .scroll-cue{
   position: absolute; left: clamp(20px, 5vw, 56px); bottom: -8px;
-  width: 22px; height: 36px; border: 1px solid var(--line); border-radius: 12px;
+  width: 22px; height: 36px; border: 1.5px solid var(--line);
+  border-radius: 46% 54% 48% 52% / 22% 22% 24% 24%;
   background: none; cursor: pointer; display: none;
 }
 @media (min-width: 641px){ .scroll-cue{ display: block; } }
@@ -237,8 +353,12 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
    ========================================================= */
 .focus{
   max-width: var(--wide); margin: 0 auto;
-  padding: 40px clamp(20px, 5vw, 56px) 0;
-  border-top: 1px solid var(--line);
+  padding: 44px clamp(20px, 5vw, 56px) 0;
+  border-top: none;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 9px;
 }
 .section-eyebrow{
   font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 10px;
@@ -251,7 +371,11 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .section{
   max-width: var(--wide); margin: 0 auto;
   padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 56px);
-  border-top: 1px solid var(--line);
+  border-top: none;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 9px;
 }
 .section-title{
   font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; margin-bottom: clamp(28px, 5vw, 44px);
@@ -265,15 +389,20 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .timeline{ display: flex; flex-direction: column; gap: 40px; }
 .tl-item{
   display: grid; grid-template-columns: 130px 1fr; gap: 24px;
-  padding-left: 20px; border-left: 1px solid var(--line); position: relative;
+  padding-left: 22px; border-left: none; position: relative;
+  background-image: var(--rule-v);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 9px 100%;
 }
 .tl-item::before{
-  content: ""; position: absolute; left: -4.5px; top: 4px;
-  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+  content: ""; position: absolute; left: -3px; top: 5px;
+  width: 9px; height: 9px; background: var(--accent);
+  border-radius: 47% 53% 52% 48% / 53% 47% 53% 47%;  /* an inked blob, not a dot */
 }
 .tl-date{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 .tl-role{ font-size: 1.1rem; font-weight: 600; }
-.tl-org{ color: var(--accent-2); font-size: 0.95rem; margin-top: 2px; }
+.tl-org{ color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
 .tl-points{ margin: 14px 0 0; padding: 0; list-style: none; max-width: 64ch; }
 .tl-points li{
   position: relative; padding-left: 18px; color: var(--muted); font-size: 0.97rem; margin-bottom: 10px;
@@ -286,33 +415,52 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 /* =========================================================
    PROJECTS
    ========================================================= */
-.project-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+/* entries ruled off from each other rather than boxed into cards — a
+   filled 1px grid gap gives perfectly straight lines, which is exactly
+   what this page is trying not to have */
+.project-grid{
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  column-gap: clamp(28px, 4vw, 52px); row-gap: 0;
+}
 @media (max-width: 780px){ .project-grid{ grid-template-columns: 1fr; } }
 .project-card{
-  background: var(--surface); padding: 28px 26px; display: flex; flex-direction: column;
-  transition: background 0.25s ease;
+  padding: 26px 0 28px; display: flex; flex-direction: column;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 9px;
 }
-.project-card:hover{ background: var(--surface-2); }
 .project-name{ font-size: 1.12rem; font-weight: 600; margin-bottom: 8px; }
 .project-desc{ color: var(--muted); font-size: 0.95rem; flex: 1; }
 .project-meta{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .tag{
-  font-family: var(--font-mono); font-size: 11.5px; color: var(--accent-2);
-  border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--muted);
+  border: 1.5px solid var(--line-soft); border-radius: var(--sketch-sm); padding: 3px 10px;
 }
 .project-link{
-  margin-top: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--muted);
-  border-bottom: 1px solid var(--line); width: fit-content; padding-bottom: 2px;
-  transition: color 0.2s, border-color 0.2s;
+  position: relative; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+  width: fit-content; padding-bottom: 6px; transition: color 0.2s;
 }
-.project-link:hover{ color: var(--accent); border-color: var(--accent); }
+.project-link::after{
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 9px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--rule-mask); mask-image: var(--rule-mask);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.project-link:hover{ color: var(--accent); }
 
 /* =========================================================
    RESEARCH
    ========================================================= */
 .paper-list{ display: flex; flex-direction: column; }
 .paper-item{
-  padding: 22px 0; border-bottom: 1px solid var(--line);
+  padding: 22px 0; border-bottom: none;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 9px;
   display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: baseline;
 }
 .paper-item:first-child{ padding-top: 0; }
@@ -327,18 +475,24 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .skill-group-title{
   font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 14px;
 }
+/* red pencil is reserved for annotations — the "Currently" label, these
+   group headings, and the dashes in the timeline. Everything else that
+   used to be a second accent is now pen-blue or graphite. */
 .skill-chips{ display: flex; flex-wrap: wrap; gap: 8px; }
 .chip{
-  font-size: 13.5px; padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+  font-size: 13.5px; padding: 6px 12px;
+  border: 1.5px solid var(--line-soft); border-radius: var(--sketch-sm);
   color: var(--text);
 }
+/* alternate the corner so a wrapped row of chips doesn't repeat one shape */
+.chip:nth-child(even){ border-radius: var(--sketch-sm-alt); }
 
 /* =========================================================
    EDUCATION / VOLUNTEER
    ========================================================= */
 .edu-item{ margin-bottom: 20px; }
 .edu-degree{ font-weight: 600; font-size: 1.02rem; }
-.edu-school{ color: var(--accent-2); font-size: 0.95rem; margin-top: 2px; }
+.edu-school{ color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
 .edu-meta{ font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 .vol-item p{ color: var(--muted); font-size: 0.97rem; max-width: 50ch; }
 
@@ -351,21 +505,26 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .contact-links{ display: flex; flex-wrap: wrap; gap: 16px; }
 .contact-links a{
   font-family: var(--font-mono); font-size: 14px;
-  border: 1px solid var(--line); border-radius: var(--radius);
+  border: 1.5px solid var(--line); border-radius: var(--sketch-md);
   padding: 12px 18px; display: inline-flex; align-items: center; gap: 8px;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
+.contact-links a:nth-child(even){ border-radius: var(--sketch-sm-alt); }
 .contact-links a:hover{ border-color: var(--accent); color: var(--accent); background: var(--surface); }
 
 .contact-form{ display: flex; flex-direction: column; gap: 22px; }
 .field{ display: flex; flex-direction: column; gap: 8px; }
 .field label{ font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+/* you write on the ruled line, so the field is the line — drawn, not a border */
 .field input, .field textarea{
   font: inherit; font-size: 15px; color: var(--text); background: none;
-  border: none; border-bottom: 1px solid var(--line); padding: 8px 2px;
-  transition: border-color 0.2s;
+  border: none; padding: 8px 2px;
+  background-image: var(--rule);
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 9px;
 }
-.field input:focus, .field textarea:focus{ outline: none; border-color: var(--accent); }
+.field input:focus, .field textarea:focus{ outline: none; }
 /* A 1px border recolour is too quiet to be the only focus indicator, so
    keyboard users get the same ring the links and buttons already get.
    Scoped selector needed — it has to outrank the .field rule above. */
@@ -377,18 +536,20 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 
 .form-submit{
   align-self: flex-start; margin-top: 6px;
-  font-family: var(--font-mono); font-size: 14px; color: var(--bg); background: var(--accent);
-  border: none; border-radius: var(--radius); padding: 13px 24px; cursor: pointer;
+  font-family: var(--font-mono); font-size: 14px;
+  color: var(--accent-ink); background: var(--accent);
+  border: none; border-radius: var(--sketch-md); padding: 13px 24px; cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease;
   will-change: transform;
 }
-.form-submit:hover{ background: var(--accent-2); }
+.form-submit:hover{ background: color-mix(in srgb, var(--accent) 84%, var(--text)); }
 .form-submit:disabled{ opacity: 0.6; cursor: default; }
 @media (hover: none){ .form-submit{ transition: background 0.2s ease; } }
 
+/* red pencil marks what's wrong, pen confirms what went through */
 .form-status{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); min-height: 1.2em; }
-.form-status[data-state="ok"]{ color: var(--accent-2); }
-.form-status[data-state="error"]{ color: var(--accent); }
+.form-status[data-state="ok"]{ color: var(--accent); }
+.form-status[data-state="error"]{ color: var(--accent-2); }
 
 /* =========================================================
    FOOTER
@@ -466,9 +627,18 @@ a:focus-visible, button:focus-visible{
         <p class="hero-lede">I build systems that catch large language models lying to themselves — retrieval pipelines, hallucination detectors, and agents that know what they don't know.</p>
         <div class="hero-links" id="heroLinks"></div>
       </div>
-      <div class="readout" id="readout" aria-label="Career metrics">
-        <!-- filled by script.js from DATA.metrics -->
-      </div>
+      <figure class="hero-photo">
+        <picture>
+          <source type="image/webp"
+                  srcset="portrait-400.webp 400w, portrait-600.webp 600w, portrait.webp 760w"
+                  sizes="(max-width: 860px) 196px, 296px">
+          <img src="portrait-600.jpg"
+               srcset="portrait-400.jpg 400w, portrait-600.jpg 600w, portrait.jpg 760w"
+               sizes="(max-width: 860px) 196px, 296px"
+               width="760" height="760"
+               alt="Mohankumar Marimuthu" fetchpriority="high" decoding="async">
+        </picture>
+      </figure>
     </div>
     <button class="scroll-cue" id="scrollCue" aria-label="Scroll to work">
       <span></span>
@@ -479,6 +649,9 @@ a:focus-visible, button:focus-visible{
   <section class="focus">
     <p class="section-eyebrow">Currently</p>
     <p class="focus-text" id="focusText"></p>
+    <div class="readout" id="readout" aria-label="Career metrics">
+      <!-- filled from DATA.metrics -->
+    </div>
   </section>
 
   <!-- EXPERIENCE -->
@@ -543,7 +716,10 @@ a:focus-visible, button:focus-visible{
           <label for="cf-topic">Topic</label>
           <input id="cf-topic" name="topic" type="text" tabindex="-1" autocomplete="off">
         </div>
-        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA"></div>
+        <!-- data-theme="auto" follows prefers-color-scheme, which is the same
+             thing the page's own default theme follows — so the widget matches
+             on load without racing the async Turnstile script. -->
+        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="auto"></div>
         <button type="submit" class="form-submit" id="cfSubmit">Send message</button>
         <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
       </form>
@@ -568,7 +744,8 @@ const DATA = {
     emailUser: "mohankumar62768",
     emailDomain: "gmail.com",
     github: "https://github.com/mohanmarimuthu1",
-    linkedin: "https://linkedin.com/in/mohan-kumar-321707182"
+    linkedin: "https://linkedin.com/in/mohan-kumar-321707182",
+    resume: "Mohankumar-Marimuthu-Resume.pdf"
   },
 
   metrics: [
@@ -689,13 +866,20 @@ function el(tag, className, html){
   return e;
 }
 
-function renderHero(){
-  const links = document.getElementById("heroLinks");
-  links.innerHTML = `
-    <a href="mailto:${DATA.socials.emailUser}@${DATA.socials.emailDomain}">Email</a>
-    <a href="${DATA.socials.github}" target="_blank" rel="noopener">GitHub</a>
-    <a href="${DATA.socials.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+/* The résumé link says what it does, and `download` gives the file a
+   sensible name instead of whatever the URL ends in. */
+function contactLinksHTML(){
+  const s = DATA.socials;
+  return `
+    <a href="mailto:${s.emailUser}@${s.emailDomain}">Email</a>
+    <a href="${s.github}" target="_blank" rel="noopener">GitHub</a>
+    <a href="${s.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="${s.resume}" download>Download résumé</a>
   `;
+}
+
+function renderHero(){
+  document.getElementById("heroLinks").innerHTML = contactLinksHTML();
 
   const readout = document.getElementById("readout");
   DATA.metrics.forEach(m => {
@@ -789,12 +973,7 @@ function renderVolunteering(){
 }
 
 function renderContact(){
-  const wrap = document.getElementById("contactLinks");
-  wrap.innerHTML = `
-    <a href="mailto:${DATA.socials.emailUser}@${DATA.socials.emailDomain}">Email</a>
-    <a href="${DATA.socials.github}" target="_blank" rel="noopener">GitHub</a>
-    <a href="${DATA.socials.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
-  `;
+  document.getElementById("contactLinks").innerHTML = contactLinksHTML();
 }
 
 /* =========================================================
@@ -802,14 +981,9 @@ function renderContact(){
    ========================================================= */
 function initTheme(){
   const root = document.documentElement;
+  // the head script already resolved and applied this before first paint
   const stored = window.__theme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
   root.setAttribute("data-theme", stored);
-
-  // Turnstile auto-renders on DOMContentLoaded, which is after this runs —
-  // so setting the attribute now is enough to make the widget load in the
-  // same theme as the page. A later manual toggle won't restyle it.
-  const widget = document.querySelector(".cf-turnstile");
-  if (widget) widget.setAttribute("data-theme", stored);
 
   document.getElementById("themeToggle").addEventListener("click", () => {
     const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
