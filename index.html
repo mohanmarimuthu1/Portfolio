@@ -33,7 +33,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Fonts are fetched at high priority but applied without blocking the first
+     paint: on a throttled phone the blocking version held first paint at 3.4s.
+     Only the weights the page actually renders are requested (Space Grotesk is
+     used at 600 only). display=swap already meant the first paint used fallback
+     metrics, so this changes when text appears, not how it settles.
+     The onload handler needs script-src 'unsafe-inline', which _headers grants;
+     if that CSP is ever tightened to nonces, move this flip into a script. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 /* =========================================================
@@ -71,7 +80,10 @@ html[data-theme="light"]{
   --muted:     #5B5F6B;
   --line:      rgba(28,30,34,0.12);
 
-  --accent:    #A9791F;
+  /* darker than the dark-theme brass: on a cream background the lighter
+     tone only reached 3.5:1, below AA for the 13px mono labels and the
+     submit button that sits on it. #8C6317 clears 4.5:1 both ways. */
+  --accent:    #8C6317;
   --accent-ink:#FFFFFF;
   --accent-2:  #3E6A62;
 
@@ -135,6 +147,7 @@ p{ margin: 0; }
 .topnav a:hover::after{ width: 100%; }
 
 .theme-toggle{
+  position: relative; /* containing block for the two stacked icons below */
   background: none; border: 1px solid var(--line); border-radius: 999px;
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; color: var(--text);
@@ -353,6 +366,12 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   transition: border-color 0.2s;
 }
 .field input:focus, .field textarea:focus{ outline: none; border-color: var(--accent); }
+/* A 1px border recolour is too quiet to be the only focus indicator, so
+   keyboard users get the same ring the links and buttons already get.
+   Scoped selector needed — it has to outrank the .field rule above. */
+.field input:focus-visible, .field textarea:focus-visible{
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
 .field textarea{ resize: vertical; min-height: 96px; font-family: var(--font-body); }
 .hp-field{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
@@ -388,8 +407,27 @@ a:focus-visible, button:focus-visible{
 .reveal{ opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.in{ opacity: 1; transform: translateY(0); }
 
+/* Touch sizing. Everything on the page already clears the 24px WCAG 2.2
+   minimum; these two are the controls a thumb has to hit precisely, and
+   the topbar has the room to give them. */
+@media (max-width: 640px){
+  .brand, .theme-toggle{ width: 40px; height: 40px; }
+  .hero-links{ gap: 20px; }
+  .hero-links a{ padding: 8px 0; }
+}
+
+/* Landscape phone: the default hero padding pushes the name past the fold
+   on a ~360px-tall viewport. Tighten it rather than let the fold cut. */
+@media (max-height: 480px) and (orientation: landscape){
+  .hero{ padding-top: 40px; padding-bottom: 40px; }
+  .hero-inner{ gap: 28px; }
+}
+
 @media print{
-  .grain, .topbar, .scroll-cue, .theme-toggle{ display: none; }
+  /* the form, its bot-check widget and its submit button are all dead
+     weight on paper — the contact links above them carry the same info */
+  .grain, .topbar, .scroll-cue, .theme-toggle, .contact-form{ display: none; }
+  .contact-grid{ grid-template-columns: 1fr; }
   body{ background: #fff; color: #000; }
   .section, .hero, .focus{ padding: 24px 0; max-width: 100%; }
   a{ color: #000; text-decoration: underline; }
@@ -766,6 +804,13 @@ function initTheme(){
   const root = document.documentElement;
   const stored = window.__theme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
   root.setAttribute("data-theme", stored);
+
+  // Turnstile auto-renders on DOMContentLoaded, which is after this runs —
+  // so setting the attribute now is enough to make the widget load in the
+  // same theme as the page. A later manual toggle won't restyle it.
+  const widget = document.querySelector(".cf-turnstile");
+  if (widget) widget.setAttribute("data-theme", stored);
+
   document.getElementById("themeToggle").addEventListener("click", () => {
     const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
     root.setAttribute("data-theme", next);
