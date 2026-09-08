@@ -505,7 +505,7 @@ a:focus-visible, button:focus-visible{
           <label for="cf-topic">Topic</label>
           <input id="cf-topic" name="topic" type="text" tabindex="-1" autocomplete="off">
         </div>
-        <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY"></div>
+        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA"></div>
         <button type="submit" class="form-submit" id="cfSubmit">Send message</button>
         <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
       </form>
@@ -826,6 +826,8 @@ function initMagneticButton(){
    CONTACT FORM — posts to a Cloudflare Pages Function
    (functions/api/contact.js). See DOCUMENTATION.md.
    ========================================================= */
+const CF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function initContactForm(){
   const form = document.getElementById("contactForm");
   if (!form) return;
@@ -843,6 +845,12 @@ function initContactForm(){
     if (!name || !email || !message){
       status.dataset.state = "error";
       status.textContent = "Fill in every field before sending.";
+      return;
+    }
+
+    if (!CF_EMAIL_RE.test(email)){
+      status.dataset.state = "error";
+      status.textContent = "Enter a valid email address.";
       return;
     }
 

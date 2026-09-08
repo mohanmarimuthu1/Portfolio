@@ -1,6 +1,7 @@
 # Planning / personal files — kept locally, not part of the published repo
 DOCUMENTATION.md
 plan.md
+process.md
 MY_RESUME.pdf
 *.jpg
 *.jpeg
@@ -13,8 +14,8 @@ MY_RESUME.pdf
 .env.*
 wrangler.toml
 .dev.vars
+.wrangler/
 
 # OS / editor cruft
 .DS_Store
 Thumbs.db
-.claude
