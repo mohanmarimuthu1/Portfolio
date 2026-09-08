@@ -80,6 +80,15 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: "not_configured" }, 500);
   }
 
+  // Resend rejects control characters in `subject` with a 422, which would
+  // otherwise surface to the visitor as a generic send failure. Flatten the
+  // name for the header line; the HTML body keeps it as typed, escaped.
+  const subjectName = Array.from(name)
+    .map((ch) => (ch.charCodeAt(0) >= 32 && ch.charCodeAt(0) !== 127 ? ch : " "))
+    .join("")
+    .replace(/\s+/g, " ")
+    .trim() || "someone";
+
   const escape = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
   const resendRes = await fetch("https://api.resend.com/emails", {
@@ -92,7 +101,7 @@ export async function onRequestPost({ request, env }) {
       from: "Portfolio contact form <contact@resend.dev>",
       to: [toEmail],
       reply_to: email,
-      subject: `Portfolio message from ${name}`,
+      subject: `Portfolio message from ${subjectName}`,
       html: `<p><strong>${escape(name)}</strong> (${escape(email)}) wrote:</p><p>${escape(message).replace(/\n/g, "<br>")}</p>`
     })
   });
