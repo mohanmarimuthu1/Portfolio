@@ -281,7 +281,9 @@ html.skip-intro .title-card{ display: none; }
   border-radius: 48% 52% 51% 49% / 52% 48% 52% 48%;
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; color: var(--text);
+  transition: transform 0.15s ease;
 }
+.theme-toggle:active{ transform: scale(0.88); }
 .theme-toggle svg{ fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; position: absolute; transition: opacity 0.25s ease, transform 0.3s ease; }
 .theme-toggle .icon-moon{ opacity: 0; transform: rotate(-40deg) scale(0.7); }
 html[data-theme="light"] .theme-toggle .icon-sun{ opacity: 0; transform: rotate(40deg) scale(0.7); }
@@ -297,10 +299,31 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   padding: clamp(64px, 12vw, 120px) clamp(20px, 5vw, 56px) 80px;
   max-width: var(--wide); margin: 0 auto;
 }
+/* the abstract wireframe sits behind the hero copy, scoped to this section
+   only — not a full-page background. Swaps to a plain gradient (no canvas,
+   no WebGL context ever created) under reduced motion or without WebGL;
+   see initHeroScene(). */
+.hero-scene{
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; display: block; pointer-events: none;
+}
+.hero-scene.is-gradient{
+  background: radial-gradient(ellipse 70% 60% at 78% 22%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%);
+}
 .hero-inner{
+  position: relative; z-index: 1;
   display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: end;
 }
 @media (max-width: 860px){ .hero-inner{ grid-template-columns: 1fr; } }
+/* the copy gets its own laid card, same idea as the photo mount below —
+   legible over the moving wireframe in both themes, not a generic dark
+   glass panel that would fight the light theme. */
+.hero-text{
+  padding: clamp(20px, 4vw, 32px);
+  border: 1.5px solid var(--line-soft); border-radius: var(--sketch-lg);
+  background: color-mix(in srgb, var(--bg) 74%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
 
 .hero-kicker{
   font-family: var(--font-mono); font-size: 13px; color: var(--accent);
@@ -476,7 +499,20 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .project-grid{
   display: grid; grid-template-columns: repeat(2, 1fr);
   column-gap: clamp(28px, 4vw, 52px); row-gap: 0;
+  perspective: 1400px;
 }
+/* project cards get a deeper 3D entrance than the site's plain rise —
+   tilted and pushed back on Z, resolving flat once in view. Alternating
+   tilt direction reuses the same "alternate the corner" idea already used
+   for chips, so a grid of them doesn't read as one repeated tile. */
+.project-card.reveal{
+  transform: translateY(18px) rotateX(10deg) rotateY(-9deg) translateZ(-50px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card.reveal:nth-child(even){
+  transform: translateY(18px) rotateX(10deg) rotateY(9deg) translateZ(-50px);
+}
+.project-card.reveal.in{ transform: none; }
 @media (max-width: 780px){ .project-grid{ grid-template-columns: 1fr; } }
 .project-card{
   padding: 26px 0 28px; display: flex; flex-direction: column;
@@ -562,10 +598,11 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   font-family: var(--font-mono); font-size: 14px;
   border: 1.5px solid var(--line); border-radius: var(--sketch-md);
   padding: 12px 18px; display: inline-flex; align-items: center; gap: 8px;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s ease;
 }
 .contact-links a:nth-child(even){ border-radius: var(--sketch-sm-alt); }
 .contact-links a:hover{ border-color: var(--accent); color: var(--accent); background: var(--surface); }
+.contact-links a:active{ transform: scale(0.96); }
 
 .contact-form{ display: flex; flex-direction: column; gap: 22px; }
 .field{ display: flex; flex-direction: column; gap: 8px; }
@@ -693,6 +730,7 @@ a:focus-visible, button:focus-visible{
 
   <!-- HERO -->
   <section class="hero">
+    <canvas id="heroScene" class="hero-scene" aria-hidden="true"></canvas>
     <div class="hero-inner">
       <div class="hero-text">
         <p class="hero-kicker">AI / ML Engineer — Coimbatore, India</p>
@@ -1135,13 +1173,125 @@ function initMagneticButton(){
   const noHover = window.matchMedia("(hover: none)").matches;
   if (reduceMotion || noHover) return;
 
+  // Drift and press both write the same inline transform, so they're
+  // combined here rather than left to fight over it via a CSS :active rule.
+  let tx = 0, ty = 0;
+  const apply = () => {
+    const scale = btn.matches(":active") ? 0.96 : 1;
+    btn.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  };
+
   btn.addEventListener("mousemove", (e) => {
     const r = btn.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width / 2;
-    const y = e.clientY - r.top - r.height / 2;
-    btn.style.transform = `translate(${x * 0.22}px, ${y * 0.35}px)`;
+    tx = (e.clientX - r.left - r.width / 2) * 0.22;
+    ty = (e.clientY - r.top - r.height / 2) * 0.35;
+    apply();
   });
-  btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+  btn.addEventListener("mouseleave", () => { tx = 0; ty = 0; apply(); });
+  btn.addEventListener("mousedown", apply);
+  btn.addEventListener("mouseup", apply);
+}
+
+/* =========================================================
+   HERO SCENE — an abstract wireframe that drifts toward the
+   cursor, scoped to the hero section only. Never created at
+   all under reduced motion or without WebGL (falls back to
+   the plain CSS gradient in .hero-scene.is-gradient instead);
+   paused via IntersectionObserver once scrolled out of view
+   and whenever the tab is hidden.
+   ========================================================= */
+async function initHeroScene(){
+  const canvas = document.getElementById("heroScene");
+  const hero = document.querySelector(".hero");
+  if (!canvas || !hero) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let hasWebGL = false;
+  try {
+    const test = document.createElement("canvas");
+    hasWebGL = !!(window.WebGLRenderingContext && (test.getContext("webgl") || test.getContext("experimental-webgl")));
+  } catch { hasWebGL = false; }
+
+  if (reduceMotion || !hasWebGL){
+    canvas.classList.add("is-gradient");
+    return;
+  }
+
+  let THREE;
+  try {
+    THREE = await import("https://unpkg.com/three@0.184.0/build/three.module.js");
+  } catch {
+    canvas.classList.add("is-gradient");
+    return;
+  }
+
+  const readAccent = () => new THREE.Color(
+    getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2A4E76"
+  );
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 6;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  const geometry = new THREE.IcosahedronGeometry(2.2, 2);
+  const basePositions = geometry.attributes.position.array.slice();
+  const material = new THREE.MeshBasicMaterial({ color: readAccent(), wireframe: true, transparent: true, opacity: 0.55 });
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  const pointer = { x: 0, y: 0 };
+  hero.addEventListener("pointermove", (e) => {
+    const r = hero.getBoundingClientRect();
+    pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    pointer.y = ((e.clientY - r.top) / r.height) * 2 - 1;
+  });
+
+  function resize(){
+    const r = hero.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return;
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / r.height;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  new ResizeObserver(resize).observe(hero);
+
+  let intersecting = true;
+  new IntersectionObserver((entries) => { intersecting = entries[0].isIntersecting; }, { threshold: 0.01 }).observe(hero);
+
+  document.getElementById("themeToggle")?.addEventListener("click", () => {
+    setTimeout(() => { material.color = readAccent(); }, 0);
+  });
+
+  const clock = new THREE.Clock();
+  const pos = geometry.attributes.position;
+
+  function frame(){
+    requestAnimationFrame(frame);
+    if (document.hidden || !intersecting) return;
+
+    const t = clock.getElapsedTime();
+
+    // a slow breathing wobble on the vertices — subtle, not a violent morph
+    for (let i = 0; i < pos.count; i++){
+      const ix = i * 3;
+      const bx = basePositions[ix], by = basePositions[ix + 1], bz = basePositions[ix + 2];
+      const wobble = 1 + Math.sin(t * 0.6 + bx * 1.4 + by * 1.1) * 0.035;
+      pos.array[ix] = bx * wobble;
+      pos.array[ix + 1] = by * wobble;
+      pos.array[ix + 2] = bz * wobble;
+    }
+    pos.needsUpdate = true;
+
+    mesh.rotation.y += 0.0022 + pointer.x * 0.001;
+    mesh.rotation.x += (pointer.y * 0.4 - mesh.rotation.x) * 0.02;
+
+    renderer.render(scene, camera);
+  }
+  frame();
 }
 
 /* =========================================================
@@ -1222,6 +1372,7 @@ renderVolunteering();
 renderContact();
 initTheme();
 initTitleCard();
+initHeroScene();
 initReveal();
 initScrollCue();
 initMagneticButton();
