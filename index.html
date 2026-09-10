@@ -63,6 +63,17 @@
   var t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", t);
   window.__theme = t;
+
+  // The title-card intro is a one-time, first-paint thing: decided here
+  // (before anything renders) so reduced-motion visitors and repeat views
+  // within the same tab never see it flash in and immediately get removed.
+  var skipIntro = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    || sessionStorage.getItem("mm-intro-seen");
+  if (skipIntro) {
+    document.documentElement.classList.add("skip-intro");
+  } else {
+    sessionStorage.setItem("mm-intro-seen", "1");
+  }
 })();
 </script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -183,6 +194,50 @@ p{ margin: 0; }
   background-position: top center;
   background-size: 100% 9px;
 }
+
+/* =========================================================
+   TITLE CARD — a one-time, hand-inked reveal of the name on
+   first load. Reuses the same underline-draw already used for
+   nav/link hovers (--rule-mask) rather than a new motif. Fully
+   decided pre-paint by the head script above (skip-intro class)
+   so there's no flash for reduced-motion or repeat-in-tab views.
+   ========================================================= */
+html.skip-intro .title-card{ display: none; }
+.title-card{
+  position: fixed; inset: 0; z-index: 900;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+}
+.title-card-inner{ display: flex; flex-direction: column; align-items: center; padding: 0 24px; }
+.title-card-name{
+  display: inline-block; text-align: center;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(2.2rem, 8vw, 4.4rem); line-height: 1.05; color: var(--text);
+  clip-path: inset(0 100% 0 0);
+}
+.title-card-rule{
+  display: block; width: 0; height: 9px; margin-top: 14px;
+  background-color: var(--accent);
+  -webkit-mask-image: var(--rule-mask); mask-image: var(--rule-mask);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.title-card.run .title-card-name{
+  animation: title-wipe 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.title-card.run .title-card-rule{
+  animation: title-rule 0.4s 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.title-card.leave{ animation: title-leave 0.4s ease forwards; }
+@keyframes title-wipe{ to{ clip-path: inset(0 0 0 0); } }
+@keyframes title-rule{ to{ width: clamp(160px, 50vw, 320px); } }
+@keyframes title-leave{ to{ opacity: 0; visibility: hidden; } }
+
+/* View Transitions cross-fade for the theme toggle, where supported —
+   matches the page's existing 0.4s theme transition speed. No-op (native
+   instant swap) in browsers without the API, and never triggered at all
+   under reduced motion (see initTheme()). */
+::view-transition-old(root), ::view-transition-new(root){ animation-duration: 0.4s; }
 
 /* =========================================================
    TOPBAR
@@ -565,8 +620,19 @@ a:focus-visible, button:focus-visible{
 }
 
 /* reveal-on-scroll for section titles/content (single subtle treatment) */
-.reveal{ opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal{
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
 .reveal.in{ opacity: 1; transform: translateY(0); }
+/* a small stagger so a grid's items settle in sequence rather than as one
+   flat block — capped at 6 so a long list doesn't trail off forever */
+.project-grid .reveal:nth-child(1), .skills-grid .reveal:nth-child(1), .timeline .reveal:nth-child(1){ transition-delay: 0s; }
+.project-grid .reveal:nth-child(2), .skills-grid .reveal:nth-child(2), .timeline .reveal:nth-child(2){ transition-delay: 0.08s; }
+.project-grid .reveal:nth-child(3), .skills-grid .reveal:nth-child(3), .timeline .reveal:nth-child(3){ transition-delay: 0.16s; }
+.project-grid .reveal:nth-child(4), .skills-grid .reveal:nth-child(4), .timeline .reveal:nth-child(4){ transition-delay: 0.24s; }
+.project-grid .reveal:nth-child(5), .skills-grid .reveal:nth-child(5), .timeline .reveal:nth-child(5){ transition-delay: 0.32s; }
+.project-grid .reveal:nth-child(6), .skills-grid .reveal:nth-child(6), .timeline .reveal:nth-child(6){ transition-delay: 0.4s; }
 
 /* Touch sizing. Everything on the page already clears the 24px WCAG 2.2
    minimum; these two are the controls a thumb has to hit precisely, and
@@ -587,7 +653,7 @@ a:focus-visible, button:focus-visible{
 @media print{
   /* the form, its bot-check widget and its submit button are all dead
      weight on paper — the contact links above them carry the same info */
-  .grain, .topbar, .scroll-cue, .theme-toggle, .contact-form{ display: none; }
+  .grain, .title-card, .topbar, .scroll-cue, .theme-toggle, .contact-form{ display: none; }
   .contact-grid{ grid-template-columns: 1fr; }
   body{ background: #fff; color: #000; }
   .section, .hero, .focus{ padding: 24px 0; max-width: 100%; }
@@ -600,6 +666,13 @@ a:focus-visible, button:focus-visible{
 <body>
 
 <div class="grain" aria-hidden="true"></div>
+
+<div id="titleCard" class="title-card" aria-hidden="true">
+  <div class="title-card-inner">
+    <span class="title-card-name">Mohankumar<br>Marimuthu</span>
+    <span class="title-card-rule"></span>
+  </div>
+</div>
 
 <header class="topbar">
   <a href="#top" class="brand">MM</a>
@@ -719,7 +792,7 @@ a:focus-visible, button:focus-visible{
         <!-- data-theme="auto" follows prefers-color-scheme, which is the same
              thing the page's own default theme follows — so the widget matches
              on load without racing the async Turnstile script. -->
-        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="auto"></div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEvD2NLFXP2jd50B" data-theme="auto"></div>
         <button type="submit" class="form-submit" id="cfSubmit">Send message</button>
         <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
       </form>
@@ -985,11 +1058,41 @@ function initTheme(){
   const stored = window.__theme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
   root.setAttribute("data-theme", stored);
 
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   document.getElementById("themeToggle").addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-    root.setAttribute("data-theme", next);
-    window.__theme = next;
+    const flip = () => {
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      window.__theme = next;
+    };
+    // Cross-fades the swap where supported; falls back to the plain instant
+    // swap everywhere else (including under reduced motion, deliberately).
+    if (!reduceMotion && document.startViewTransition){
+      document.startViewTransition(flip);
+    } else {
+      flip();
+    }
   });
+}
+
+/* =========================================================
+   TITLE CARD — plays the hand-inked name reveal once per tab
+   session. Whether to show it at all was already decided in
+   the head script (skip-intro class), before first paint.
+   ========================================================= */
+function initTitleCard(){
+  const card = document.getElementById("titleCard");
+  if (!card) return;
+  if (document.documentElement.classList.contains("skip-intro")){
+    card.remove();
+    return;
+  }
+  requestAnimationFrame(() => card.classList.add("run"));
+  window.setTimeout(() => {
+    card.classList.add("leave");
+    card.addEventListener("animationend", () => card.remove(), { once: true });
+  }, 1300);
 }
 
 /* =========================================================
@@ -1042,8 +1145,8 @@ function initMagneticButton(){
 }
 
 /* =========================================================
-   CONTACT FORM — posts to a Cloudflare Pages Function
-   (functions/api/contact.js). See DOCUMENTATION.md.
+   CONTACT FORM — posts to a Vercel serverless function
+   (api/contact.js). See DOCUMENTATION.md.
    ========================================================= */
 const CF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -1118,6 +1221,7 @@ renderEducation();
 renderVolunteering();
 renderContact();
 initTheme();
+initTitleCard();
 initReveal();
 initScrollCue();
 initMagneticButton();
