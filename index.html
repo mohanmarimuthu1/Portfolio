@@ -207,6 +207,13 @@ p{ margin: 0; }
   opacity: var(--paper-alpha); mix-blend-mode: var(--paper-blend);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+/* the faintest CRT scanlines over the whole page — under the grain, so it
+   reads as "this display has a scan pitch" rather than a stripe pattern */
+.scanlines{
+  position: fixed; inset: 0; pointer-events: none; z-index: 998;
+  opacity: 0.035;
+  background-image: repeating-linear-gradient(to bottom, var(--text) 0px, var(--text) 1px, transparent 1px, transparent 3px);
+}
 
 /* A ruled line with a human wobble, used everywhere a hairline divider
    used to be. Stretched to the element's width, so no two are identical
@@ -279,10 +286,20 @@ html.skip-intro .title-card{ display: none; }
   background-size: 100% 9px;
 }
 .brand{
+  position: relative;
   font-family: var(--font-mono); font-weight: 500; font-size: 15px;
   border: 1.5px solid var(--line); border-radius: var(--sketch-sm);
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
 }
+/* the machine is on — a power LED clipped to the brand mark, the one
+   indicator on the page that's always lit */
+.brand::after{
+  content: ""; position: absolute; top: -3px; right: -3px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 6px 1px var(--glow);
+  animation: led-pulse 2.6s ease-in-out infinite;
+}
+@keyframes led-pulse{ 0%, 100%{ opacity: 1; } 50%{ opacity: 0.5; } }
 .topnav{ display: flex; gap: clamp(14px, 3vw, 32px); font-size: 14px; }
 .topnav a{ color: var(--muted); position: relative; padding: 4px 0; transition: color 0.2s; }
 .topnav a:hover{ color: var(--text); }
@@ -354,6 +371,14 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   margin-bottom: 20px;
   opacity: 0; animation: rise 0.6s 0.04s ease forwards;
 }
+/* a terminal cursor left blinking at the end of the line — the one place
+   the "always-on machine" idea shows up in type rather than in the 3D scene */
+.hero-kicker::after{
+  content: ""; display: inline-block; width: 8px; height: 1em; margin-left: 6px;
+  background: var(--accent); vertical-align: -2px;
+  animation: cursor-blink 1.1s steps(1, end) infinite;
+}
+@keyframes cursor-blink{ 50%{ opacity: 0; } }
 .hero-name{
   font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 600; line-height: 1.02;
   opacity: 0; animation: rise 0.65s 0.08s ease forwards;
@@ -464,6 +489,11 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 }
 .section-eyebrow{
   font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-eyebrow::before{
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-2); box-shadow: 0 0 5px 1px color-mix(in srgb, var(--accent-2) 60%, transparent);
 }
 .focus-text{ max-width: 62ch; color: var(--muted); font-size: 1.02rem; }
 
@@ -500,7 +530,8 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .tl-item::before{
   content: ""; position: absolute; left: -3px; top: 5px;
   width: 9px; height: 9px; background: var(--accent);
-  border-radius: 47% 53% 52% 48% / 53% 47% 53% 47%;  /* an inked blob, not a dot */
+  border-radius: 47% 53% 52% 48% / 53% 47% 53% 47%;  /* an indicator LED, not a bullet */
+  box-shadow: 0 0 7px 1px var(--glow);
 }
 .tl-date{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 .tl-role{ font-size: 1.1rem; font-weight: 600; }
@@ -536,7 +567,14 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .project-card.reveal:nth-child(even){
   transform: translateY(18px) rotateX(10deg) rotateY(9deg) translateZ(-50px);
 }
-.project-card.reveal.in{ transform: none; }
+/* settles in with a quick brightness stutter instead of a plain fade —
+   a screen powering on, not a generic slide-up entrance */
+.project-card.reveal.in{ transform: none; animation: crt-power-on 0.5s steps(1, end) 1; }
+@keyframes crt-power-on{
+  0%{ filter: brightness(1); } 8%{ filter: brightness(2.4); }
+  15%{ filter: brightness(0.55); } 24%{ filter: brightness(1.9); }
+  34%{ filter: brightness(1); } 100%{ filter: brightness(1); }
+}
 @media (max-width: 780px){ .project-grid{ grid-template-columns: 1fr; } }
 .project-card{
   padding: 26px 0 28px; display: flex; flex-direction: column;
@@ -590,14 +628,17 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 .skill-group-title{
   font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-2); margin-bottom: 14px;
 }
-/* red pencil is reserved for annotations — the "Currently" label, these
-   group headings, and the dashes in the timeline. Everything else that
-   used to be a second accent is now pen-blue or graphite. */
+/* amber is reserved for annotations — the "Currently" label, these group
+   headings, and the dashes in the timeline. Everything else is phosphor
+   green or ink. */
 .skill-chips{ display: flex; flex-wrap: wrap; gap: 8px; }
+/* a stamped keycap, not a hand-drawn outline — chips are the one place the
+   page borrows the machine's own vocabulary instead of the notebook's */
 .chip{
   font-size: 13.5px; padding: 6px 12px;
   border: 1.5px solid var(--line-soft); border-radius: var(--sketch-sm);
-  color: var(--text);
+  color: var(--text); background: var(--surface);
+  box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
 }
 /* alternate the corner so a wrapped row of chips doesn't repeat one shape */
 .chip:nth-child(even){ border-radius: var(--sketch-sm-alt); }
@@ -655,14 +696,19 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   font-family: var(--font-mono); font-size: 14px;
   color: var(--accent-ink); background: var(--accent);
   border: none; border-radius: var(--sketch-md); padding: 13px 24px; cursor: pointer;
-  transition: transform 0.15s ease, background 0.2s ease;
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.35), inset 0 -3px 0 rgba(0,0,0,0.18);
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
   will-change: transform;
 }
-.form-submit:hover{ background: color-mix(in srgb, var(--accent) 84%, var(--text)); }
+/* pressing send lights it up like a keyed-in command, not just a color swap */
+.form-submit:hover{
+  background: color-mix(in srgb, var(--accent) 84%, var(--text));
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.35), inset 0 -3px 0 rgba(0,0,0,0.18), 0 0 16px 2px var(--glow);
+}
 .form-submit:disabled{ opacity: 0.6; cursor: default; }
 @media (hover: none){ .form-submit{ transition: background 0.2s ease; } }
 
-/* red pencil marks what's wrong, pen confirms what went through */
+/* amber marks what's wrong, phosphor green confirms what went through */
 .form-status{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); min-height: 1.2em; }
 .form-status[data-state="ok"]{ color: var(--accent); }
 .form-status[data-state="error"]{ color: var(--accent-2); }
@@ -727,6 +773,7 @@ a:focus-visible, button:focus-visible{
 <body>
 
 <div class="grain" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
 
 <div id="titleCard" class="title-card" aria-hidden="true">
   <div class="title-card-inner">
