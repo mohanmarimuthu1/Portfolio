@@ -36,12 +36,13 @@
 }
 </script>
 
-<!-- the portrait is the largest thing above the fold, so start it early
-     rather than waiting for the parser to reach the <picture> -->
-<link rel="preload" as="image" type="image/webp" fetchpriority="high"
-      href="portrait-600.webp"
+<!-- the portrait is now a small corner photo (the CRT hero scene carries
+     the fold), so it preloads the smallest variant at default priority
+     rather than competing with the 3D scene's own scripts -->
+<link rel="preload" as="image" type="image/webp"
+      href="portrait-400.webp"
       imagesrcset="portrait-400.webp 400w, portrait-600.webp 600w, portrait.webp 760w"
-      imagesizes="(max-width: 860px) 196px, 296px">
+      imagesizes="128px">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,7 +171,7 @@ html[data-theme="dark"]{
   --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 6px 22px rgba(0,0,0,0.4);
 
   --rule: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjAwIDEyJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48Zz48cGF0aCBkPSJNMC4wMCAxLjI1IEM3LjY5IDEuMzQgMzAuNzcgMS43MyA0Ni4xNSAxLjgxIEM2MS41NCAxLjkwIDc2LjkyIDEuODIgOTIuMzEgMS43NCBDMTA3LjY5IDEuNjcgMTIzLjA4IDEuNDkgMTM4LjQ2IDEuMzQgQzE1My44NSAxLjE5IDE2OS4yMyAwLjk1IDE4NC42MiAwLjg0IEMyMDAuMDAgMC43MyAyMTUuMzggMC43MSAyMzAuNzcgMC42NyBDMjQ2LjE1IDAuNjMgMjYxLjU0IDAuNTQgMjc2LjkyIDAuNjIgQzI5Mi4zMSAwLjcwIDMwNy42OSAwLjk2IDMyMy4wOCAxLjE2IEMzMzguNDYgMS4zNSAzNTMuODUgMS42OSAzNjkuMjMgMS43OSBDMzg0LjYyIDEuODkgNDAwLjAwIDEuODAgNDE1LjM4IDEuNzUgQzQzMC43NyAxLjcxIDQ0Ni4xNSAxLjYyIDQ2MS41NCAxLjQ5IEM0NzYuOTIgMS4zNyA0OTIuMzEgMS4xNSA1MDcuNjkgMS4wMiBDNTIzLjA4IDAuODkgNTM4LjQ2IDAuNzggNTUzLjg1IDAuNzMgQzU2OS4yMyAwLjY4IDU4NC42MiAwLjY2IDYwMC4wMCAwLjczIEM2MTUuMzggMC44MCA2MzAuNzcgMS4wMCA2NDYuMTUgMS4xNiBDNjYxLjU0IDEuMzIgNjc2LjkyIDEuNTggNjkyLjMxIDEuNjkgQzcwNy42OSAxLjc5IDcyMy4wOCAxLjgyIDczOC40NiAxLjc5IEM3NTMuODUgMS43NSA3NjkuMjMgMS42MyA3ODQuNjIgMS40NyBDODAwLjAwIDEuMzEgODE1LjM4IDAuOTYgODMwLjc3IDAuODMgQzg0Ni4xNSAwLjcwIDg2MS41NCAwLjcyIDg3Ni45MiAwLjY4IEM4OTIuMzEgMC42NSA5MDcuNjkgMC41MSA5MjMuMDggMC42MSBDOTM4LjQ2IDAuNzIgOTUzLjg1IDEuMTYgOTY5LjIzIDEuMzIgQzk4NC42MiAxLjQ4IDEwMDAuMDAgMS40OSAxMDE1LjM4IDEuNTYgQzEwMzAuNzcgMS42MyAxMDQ2LjE1IDEuNzcgMTA2MS41NCAxLjc0IEMxMDc2LjkyIDEuNzIgMTA5Mi4zMSAxLjU2IDExMDcuNjkgMS40MiBDMTEyMy4wOCAxLjI4IDExMzguNDYgMS4wNCAxMTUzLjg1IDAuOTEgQzExNjkuMjMgMC43NyAxMTkyLjMxIDAuNjYgMTIwMC4wMCAwLjYxIiBmaWxsPSJub25lIiBzdHJva2U9IiNEQ0U4RDEiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMC4wMCA0LjM0IEM3LjY5IDQuMzEgMzAuNzcgNC4yOCA0Ni4xNSA0LjE4IEM2MS41NCA0LjA5IDc2LjkyIDMuOTEgOTIuMzEgMy43NCBDMTA3LjY5IDMuNTcgMTIzLjA4IDMuMjcgMTM4LjQ2IDMuMTYgQzE1My44NSAzLjA1IDE2OS4yMyAzLjA5IDE4NC42MiAzLjEwIEMyMDAuMDAgMy4xMSAyMTUuMzggMy4wNyAyMzAuNzcgMy4yMiBDMjQ2LjE1IDMuMzYgMjYxLjU0IDMuODIgMjc2LjkyIDMuOTggQzI5Mi4zMSA0LjEzIDMwNy42OSA0LjE0IDMyMy4wOCA0LjE2IEMzMzguNDYgNC4xOCAzNTMuODUgNC4xOCAzNjkuMjMgNC4wNyBDMzg0LjYyIDMuOTcgNDAwLjAwIDMuNjcgNDE1LjM4IDMuNTMgQzQzMC43NyAzLjM4IDQ0Ni4xNSAzLjI1IDQ2MS41NCAzLjE4IEM0NzYuOTIgMy4xMiA0OTIuMzEgMy4wOCA1MDcuNjkgMy4xMyBDNTIzLjA4IDMuMTggNTM4LjQ2IDMuMzUgNTUzLjg1IDMuNDcgQzU2OS4yMyAzLjU4IDU4NC42MiAzLjY5IDYwMC4wMCAzLjgwIEM2MTUuMzggMy45MSA2MzAuNzcgNC4wNiA2NDYuMTUgNC4xMSBDNjYxLjU0IDQuMTcgNjc2LjkyIDQuMjAgNjkyLjMxIDQuMTIgQzcwNy42OSA0LjA0IDcyMy4wOCAzLjc4IDczOC40NiAzLjYyIEM3NTMuODUgMy40NiA3NjkuMjMgMy4yNSA3ODQuNjIgMy4xNCBDODAwLjAwIDMuMDMgODE1LjM4IDIuOTMgODMwLjc3IDIuOTggQzg0Ni4xNSAzLjA0IDg2MS41NCAzLjMwIDg3Ni45MiAzLjQ1IEM4OTIuMzEgMy42MCA5MDcuNjkgMy43NyA5MjMuMDggMy44OCBDOTM4LjQ2IDMuOTggOTUzLjg1IDQuMDMgOTY5LjIzIDQuMDcgQzk4NC42MiA0LjEyIDEwMDAuMDAgNC4yNCAxMDE1LjM4IDQuMTUgQzEwMzAuNzcgNC4wNyAxMDQ2LjE1IDMuNzMgMTA2MS41NCAzLjU3IEMxMDc2LjkyIDMuNDEgMTA5Mi4zMSAzLjI4IDExMDcuNjkgMy4xOSBDMTEyMy4wOCAzLjA5IDExMzguNDYgMi45NCAxMTUzLjg1IDIuOTggQzExNjkuMjMgMy4wMiAxMTkyLjMxIDMuMzMgMTIwMC4wMCAzLjQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkIwMDAiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMC4wMCA2LjIzIEM3LjY5IDYuMTYgMzAuNzcgNS45NiA0Ni4xNSA1LjgxIEM2MS41NCA1LjY3IDc2LjkyIDUuNDYgOTIuMzEgNS4zOSBDMTA3LjY5IDUuMzEgMTIzLjA4IDUuMjcgMTM4LjQ2IDUuMzYgQzE1My44NSA1LjQ1IDE2OS4yMyA1Ljc1IDE4NC42MiA1Ljk0IEMyMDAuMDAgNi4xMyAyMTUuMzggNi4zOCAyMzAuNzcgNi41MCBDMjQ2LjE1IDYuNjIgMjYxLjU0IDYuNjkgMjc2LjkyIDYuNjUgQzI5Mi4zMSA2LjYxIDMwNy42OSA2LjQ1IDMyMy4wOCA2LjI4IEMzMzguNDYgNi4xMSAzNTMuODUgNS44MCAzNjkuMjMgNS42MyBDMzg0LjYyIDUuNDYgNDAwLjAwIDUuMjggNDE1LjM4IDUuMjcgQzQzMC43NyA1LjI3IDQ0Ni4xNSA1LjQ5IDQ2MS41NCA1LjU4IEM0NzYuOTIgNS42NyA0OTIuMzEgNS42NSA1MDcuNjkgNS44MiBDNTIzLjA4IDUuOTkgNTM4LjQ2IDYuNTAgNTUzLjg1IDYuNjEgQzU2OS4yMyA2LjcyIDU4NC42MiA2LjU1IDYwMC4wMCA2LjQ4IEM2MTUuMzggNi40MSA2MzAuNzcgNi4yOSA2NDYuMTUgNi4xOCBDNjYxLjU0IDYuMDcgNjc2LjkyIDUuOTUgNjkyLjMxIDUuODMgQzcwNy42OSA1LjcxIDcyMy4wOCA1LjUwIDczOC40NiA1LjQ1IEM3NTMuODUgNS4zOSA3NjkuMjMgNS40MiA3ODQuNjIgNS41MiBDODAwLjAwIDUuNjEgODE1LjM4IDUuODUgODMwLjc3IDYuMDMgQzg0Ni4xNSA2LjIxIDg2MS41NCA2LjQ5IDg3Ni45MiA2LjYxIEM4OTIuMzEgNi43MyA5MDcuNjkgNi44MCA5MjMuMDggNi43NCBDOTM4LjQ2IDYuNjggOTUzLjg1IDYuNDEgOTY5LjIzIDYuMjQgQzk4NC42MiA2LjA3IDEwMDAuMDAgNS44NiAxMDE1LjM4IDUuNzIgQzEwMzAuNzcgNS41OCAxMDQ2LjE1IDUuNDYgMTA2MS41NCA1LjQxIEMxMDc2LjkyIDUuMzUgMTA5Mi4zMSA1LjI3IDExMDcuNjkgNS4zNiBDMTEyMy4wOCA1LjQ1IDExMzguNDYgNS43NCAxMTUzLjg1IDUuOTQgQzExNjkuMjMgNi4xNCAxMTkyLjMxIDYuNDcgMTIwMC4wMCA2LjU4IiBmaWxsPSJub25lIiBzdHJva2U9IiMzOUZGNkEiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMC4wMCA3Ljk3IEM3LjY5IDcuOTMgMzAuNzcgNy43OCA0Ni4xNSA3Ljc3IEM2MS41NCA3Ljc1IDc2LjkyIDcuNzYgOTIuMzEgNy45MCBDMTA3LjY5IDguMDUgMTIzLjA4IDguNDcgMTM4LjQ2IDguNjMgQzE1My44NSA4Ljc5IDE2OS4yMyA4LjgzIDE4NC42MiA4Ljg2IEMyMDAuMDAgOC44OSAyMTUuMzggOC44OCAyMzAuNzcgOC44MCBDMjQ2LjE1IDguNzMgMjYxLjU0IDguNTYgMjc2LjkyIDguNDIgQzI5Mi4zMSA4LjI3IDMwNy42OSA4LjA0IDMyMy4wOCA3Ljk0IEMzMzguNDYgNy44NCAzNTMuODUgNy43OSAzNjkuMjMgNy44MyBDMzg0LjYyIDcuODggNDAwLjAwIDguMDYgNDE1LjM4IDguMjEgQzQzMC43NyA4LjM2IDQ0Ni4xNSA4LjYxIDQ2MS41NCA4LjcyIEM0NzYuOTIgOC44MyA0OTIuMzEgOC44OCA1MDcuNjkgOC44OSBDNTIzLjA4IDguODkgNTM4LjQ2IDguODIgNTUzLjg1IDguNzcgQzU2OS4yMyA4LjcyIDU4NC42MiA4LjY4IDYwMC4wMCA4LjU3IEM2MTUuMzggOC40NiA2MzAuNzcgOC4yMiA2NDYuMTUgOC4xMSBDNjYxLjU0IDguMDAgNjc2LjkyIDcuODggNjkyLjMxIDcuODkgQzcwNy42OSA3LjkwIDcyMy4wOCA4LjAzIDczOC40NiA4LjE1IEM3NTMuODUgOC4yOCA3NjkuMjMgOC40NyA3ODQuNjIgOC42NCBDODAwLjAwIDguODAgODE1LjM4IDkuMTAgODMwLjc3IDkuMTIgQzg0Ni4xNSA5LjE0IDg2MS41NCA4Ljg5IDg3Ni45MiA4Ljc3IEM4OTIuMzEgOC42NSA5MDcuNjkgOC41MyA5MjMuMDggOC40MCBDOTM4LjQ2IDguMjcgOTUzLjg1IDguMTEgOTY5LjIzIDcuOTggQzk4NC42MiA3Ljg2IDEwMDAuMDAgNy42MiAxMDE1LjM4IDcuNjUgQzEwMzAuNzcgNy42NyAxMDQ2LjE1IDcuOTcgMTA2MS41NCA4LjEyIEMxMDc2LjkyIDguMjggMTA5Mi4zMSA4LjQ1IDExMDcuNjkgOC41OCBDMTEyMy4wOCA4LjcyIDExMzguNDYgOC44NSAxMTUzLjg1IDguOTMgQzExNjkuMjMgOS4wMSAxMTkyLjMxIDkuMDQgMTIwMC4wMCA5LjA2IiBmaWxsPSJub25lIiBzdHJva2U9IiMzOUM5RkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMC4wMCAxMC4zMyBDNy42OSAxMC4zOCAzMC43NyAxMC40OCA0Ni4xNSAxMC42MyBDNjEuNTQgMTAuNzggNzYuOTIgMTEuMTIgOTIuMzEgMTEuMjMgQzEwNy42OSAxMS4zNSAxMjMuMDggMTEuMzEgMTM4LjQ2IDExLjMxIEMxNTMuODUgMTEuMzEgMTY5LjIzIDExLjM1IDE4NC42MiAxMS4yMyBDMjAwLjAwIDExLjEyIDIxNS4zOCAxMC44MyAyMzAuNzcgMTAuNjQgQzI0Ni4xNSAxMC40NSAyNjEuNTQgMTAuMTQgMjc2LjkyIDEwLjA3IEMyOTIuMzEgMTAuMDAgMzA3LjY5IDEwLjE1IDMyMy4wOCAxMC4yNCBDMzM4LjQ2IDEwLjM0IDM1My44NSAxMC40NSAzNjkuMjMgMTAuNjMgQzM4NC42MiAxMC44MSA0MDAuMDAgMTEuMTcgNDE1LjM4IDExLjMyIEM0MzAuNzcgMTEuNDggNDQ2LjE1IDExLjYxIDQ2MS41NCAxMS41NyBDNDc2LjkyIDExLjUzIDQ5Mi4zMSAxMS4yNyA1MDcuNjkgMTEuMDkgQzUyMy4wOCAxMC45MCA1MzguNDYgMTAuNjEgNTUzLjg1IDEwLjQ3IEM1NjkuMjMgMTAuMzMgNTg0LjYyIDEwLjI3IDYwMC4wMCAxMC4yNiBDNjE1LjM4IDEwLjI0IDYzMC43NyAxMC4yOCA2NDYuMTUgMTAuMzggQzY2MS41NCAxMC40OCA2NzYuOTIgMTAuNzAgNjkyLjMxIDEwLjg2IEM3MDcuNjkgMTEuMDIgNzIzLjA4IDExLjI0IDczOC40NiAxMS4zNCBDNzUzLjg1IDExLjQzIDc2OS4yMyAxMS40OSA3ODQuNjIgMTEuNDQgQzgwMC4wMCAxMS4zOSA4MTUuMzggMTEuMTkgODMwLjc3IDExLjAzIEM4NDYuMTUgMTAuODcgODYxLjU0IDEwLjYxIDg3Ni45MiAxMC40OCBDODkyLjMxIDEwLjM2IDkwNy42OSAxMC4zMCA5MjMuMDggMTAuMjggQzkzOC40NiAxMC4yNyA5NTMuODUgMTAuMzAgOTY5LjIzIDEwLjM5IEM5ODQuNjIgMTAuNDcgMTAwMC4wMCAxMC42NCAxMDE1LjM4IDEwLjc5IEMxMDMwLjc3IDEwLjk0IDEwNDYuMTUgMTEuMTkgMTA2MS41NCAxMS4zMSBDMTA3Ni45MiAxMS40MiAxMDkyLjMxIDExLjUyIDExMDcuNjkgMTEuNDggQzExMjMuMDggMTEuNDMgMTEzOC40NiAxMS4yMiAxMTUzLjg1IDExLjA1IEMxMTY5LjIzIDEwLjg4IDExOTIuMzEgMTAuNTYgMTIwMC4wMCAxMC40NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY2MkM0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9nPjwvc3ZnPg==");
-  --rule-v: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMiAxMjAwJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48ZyB0cmFuc2Zvcm09J21hdHJpeCgwIDEgMSAwIDAgMCknPjxwYXRoIGQ9Ik0wLjAwIDEuMjUgQzcuNjkgMS4zNCAzMC43NyAxLjczIDQ2LjE1IDEuODEgQzYxLjU0IDEuOTAgNzYuOTIgMS44MiA5Mi4zMSAxLjc0IEMxMDcuNjkgMS42NyAxMjMuMDggMS40OSAxMzguNDYgMS4zNCBDMTUzLjg1IDEuMTkgMTY5LjIzIDAuOTUgMTg0LjYyIDAuODQgQzIwMC4wMCAwLjczIDIxNS4zOCAwLjcxIDIzMC43NyAwLjY3IEMyNDYuMTUgMC42MyAyNjEuNTQgMC41NCAyNzYuOTIgMC42MiBDMjkyLjMxIDAuNzAgMzA3LjY5IDAuOTYgMzIzLjA4IDEuMTYgQzMzOC40NiAxLjM1IDM1My44NSAxLjY5IDM2OS4yMyAxLjc5IEMzODQuNjIgMS44OSA0MDAuMDAgMS44MCA0MTUuMzggMS43NSBDNDMwLjc3IDEuNzEgNDQ2LjE1IDEuNjIgNDYxLjU0IDEuNDkgQzQ3Ni45MiAxLjM3IDQ5Mi4zMSAxLjE1IDUwNy42OSAxLjAyIEM1MjMuMDggMC44OSA1MzguNDYgMC43OCA1NTMuODUgMC43MyBDNTY5LjIzIDAuNjggNTg0LjYyIDAuNjYgNjAwLjAwIDAuNzMgQzYxNS4zOCAwLjgwIDYzMC43NyAxLjAwIDY0Ni4xNSAxLjE2IEM2NjEuNTQgMS4zMiA2NzYuOTIgMS41OCA2OTIuMzEgMS42OSBDNzA3LjY5IDEuNzkgNzIzLjA4IDEuODIgNzM4LjQ2IDEuNzkgQzc1My44NSAxLjc1IDc2OS4yMyAxLjYzIDc4NC42MiAxLjQ3IEM4MDAuMDAgMS4zMSA4MTUuMzggMC45NiA4MzAuNzcgMC44MyBDODQ2LjE1IDAuNzAgODYxLjU0IDAuNzIgODc2LjkyIDAuNjggQzg5Mi4zMSAwLjY1IDkwNy42OSAwLjUxIDkyMy4wOCAwLjYxIEM5MzguNDYgMC43MiA5NTMuODUgMS4xNiA5NjkuMjMgMS4zMiBDOTg0LjYyIDEuNDggMTAwMC4wMCAxLjQ5IDEwMTUuMzggMS41NiBDMTAzMC43NyAxLjYzIDEwNDYuMTUgMS43NyAxMDYxLjU0IDEuNzQgQzEwNzYuOTIgMS43MiAxMDkyLjMxIDEuNTYgMTEwNy42OSAxLjQyIEMxMTIzLjA4IDEuMjggMTEzOC40NiAxLjA0IDExNTMuODUgMC45MSBDMTE2OS4yMyAwLjc3IDExOTIuMzEgMC42NiAxMjAwLjAwIDAuNjEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0RDRThEMSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDQuMzQgQzcuNjkgNC4zMSAzMC43NyA0LjI4IDQ2LjE1IDQuMTggQzYxLjU0IDQuMDkgNzYuOTIgMy45MSA5Mi4zMSAzLjc0IEMxMDcuNjkgMy41NyAxMjMuMDggMy4yNyAxMzguNDYgMy4xNiBDMTUzLjg1IDMuMDUgMTY5LjIzIDMuMDkgMTg0LjYyIDMuMTAgQzIwMC4wMCAzLjExIDIxNS4zOCAzLjA3IDIzMC43NyAzLjIyIEMyNDYuMTUgMy4zNiAyNjEuNTQgMy44MiAyNzYuOTIgMy45OCBDMjkyLjMxIDQuMTMgMzA3LjY5IDQuMTQgMzIzLjA4IDQuMTYgQzMzOC40NiA0LjE4IDM1My44NSA0LjE4IDM2OS4yMyA0LjA3IEMzODQuNjIgMy45NyA0MDAuMDAgMy42NyA0MTUuMzggMy41MyBDNDMwLjc3IDMuMzggNDQ2LjE1IDMuMjUgNDYxLjU0IDMuMTggQzQ3Ni45MiAzLjEyIDQ5Mi4zMSAzLjA4IDUwNy42OSAzLjEzIEM1MjMuMDggMy4xOCA1MzguNDYgMy4zNSA1NTMuODUgMy40NyBDNTY5LjIzIDMuNTggNTg0LjYyIDMuNjkgNjAwLjAwIDMuODAgQzYxNS4zOCAzLjkxIDYzMC43NyA0LjA2IDY0Ni4xNSA0LjExIEM2NjEuNTQgNC4xNyA2NzYuOTIgNC4yMCA2OTIuMzEgNC4xMiBDNzA3LjY5IDQuMDQgNzIzLjA4IDMuNzggNzM4LjQ2IDMuNjIgQzc1My44NSAzLjQ2IDc2OS4yMyAzLjI1IDc4NC42MiAzLjE0IEM4MDAuMDAgMy4wMyA4MTUuMzggMi45MyA4MzAuNzcgMi45OCBDODQ2LjE1IDMuMDQgODYxLjU0IDMuMzAgODc2LjkyIDMuNDUgQzg5Mi4zMSAzLjYwIDkwNy42OSAzLjc3IDkyMy4wOCAzLjg4IEM5MzguNDYgMy45OCA5NTMuODUgNC4wMyA5NjkuMjMgNC4wNyBDOTg0LjYyIDQuMTIgMTAwMC4wMCA0LjI0IDEwMTUuMzggNC4xNSBDMTAzMC43NyA0LjA3IDEwNDYuMTUgMy43MyAxMDYxLjU0IDMuNTcgQzEwNzYuOTIgMy40MSAxMDkyLjMxIDMuMjggMTEwNy42OSAzLjE5IEMxMTIzLjA4IDMuMDkgMTEzOC40NiAyLjk0IDExNTMuODUgMi45OCBDMTE2OS4yMyAzLjAyIDExOTIuMzEgMy4zMyAxMjAwLjAwIDMuNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGQjAwMCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDYuMjMgQzcuNjkgNi4xNiAzMC43NyA1Ljk2IDQ2LjE1IDUuODEgQzYxLjU0IDUuNjcgNzYuOTIgNS40NiA5Mi4zMSA1LjM5IEMxMDcuNjkgNS4zMSAxMjMuMDggNS4yNyAxMzguNDYgNS4zNiBDMTUzLjg1IDUuNDUgMTY5LjIzIDUuNzUgMTg0LjYyIDUuOTQgQzIwMC4wMCA2LjEzIDIxNS4zOCA2LjM4IDIzMC43NyA2LjUwIEMyNDYuMTUgNi42MiAyNjEuNTQgNi42OSAyNzYuOTIgNi42NSBDMjkyLjMxIDYuNjEgMzA3LjY5IDYuNDUgMzIzLjA4IDYuMjggQzMzOC40NiA2LjExIDM1My44NSA1LjgwIDM2OS4yMyA1LjYzIEMzODQuNjIgNS40NiA0MDAuMDAgNS4yOCA0MTUuMzggNS4yNyBDNDMwLjc3IDUuMjcgNDQ2LjE1IDUuNDkgNDYxLjU0IDUuNTggQzQ3Ni45MiA1LjY3IDQ5Mi4zMSA1LjY1IDUwNy42OSA1LjgyIEM1MjMuMDggNS45OSA1MzguNDYgNi41MCA1NTMuODUgNi42MSBDNTY5LjIzIDYuNzIgNTg0LjYyIDYuNTUgNjAwLjAwIDYuNDggQzYxNS4zOCA2LjQxIDYzMC43NyA2LjI5IDY0Ni4xNSA2LjE4IEM2NjEuNTQgNi4wNyA2NzYuOTIgNS45NSA2OTIuMzEgNS44MyBDNzA3LjY5IDUuNzEgNzIzLjA4IDUuNTAgNzM4LjQ2IDUuNDUgQzc1My44NSA1LjM5IDc2OS4yMyA1LjQyIDc4NC42MiA1LjUyIEM4MDAuMDAgNS42MSA4MTUuMzggNS44NSA4MzAuNzcgNi4wMyBDODQ2LjE1IDYuMjEgODYxLjU0IDYuNDkgODc2LjkyIDYuNjEgQzg5Mi4zMSA2LjczIDkwNy42OSA2LjgwIDkyMy4wOCA2Ljc0IEM5MzguNDYgNi42OCA5NTMuODUgNi40MSA5NjkuMjMgNi4yNCBDOTg0LjYyIDYuMDcgMTAwMC4wMCA1Ljg2IDEwMTUuMzggNS43MiBDMTAzMC43NyA1LjU4IDEwNDYuMTUgNS40NiAxMDYxLjU0IDUuNDEgQzEwNzYuOTIgNS4zNSAxMDkyLjMxIDUuMjcgMTEwNy42OSA1LjM2IEMxMTIzLjA4IDUuNDUgMTEzOC40NiA1Ljc0IDExNTMuODUgNS45NCBDMTE2OS4yMyA2LjE0IDExOTIuMzEgNi40NyAxMjAwLjAwIDYuNTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5RkY2QSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDcuOTcgQzcuNjkgNy45MyAzMC43NyA3Ljc4IDQ2LjE1IDcuNzcgQzYxLjU0IDcuNzUgNzYuOTIgNy43NiA5Mi4zMSA3LjkwIEMxMDcuNjkgOC4wNSAxMjMuMDggOC40NyAxMzguNDYgOC42MyBDMTUzLjg1IDguNzkgMTY5LjIzIDguODMgMTg0LjYyIDguODYgQzIwMC4wMCA4Ljg5IDIxNS4zOCA4Ljg4IDIzMC43NyA4LjgwIEMyNDYuMTUgOC43MyAyNjEuNTQgOC41NiAyNzYuOTIgOC40MiBDMjkyLjMxIDguMjcgMzA3LjY5IDguMDQgMzIzLjA4IDcuOTQgQzMzOC40NiA3Ljg0IDM1My44NSA3Ljc5IDM2OS4yMyA3LjgzIEMzODQuNjIgNy44OCA0MDAuMDAgOC4wNiA0MTUuMzggOC4yMSBDNDMwLjc3IDguMzYgNDQ2LjE1IDguNjEgNDYxLjU0IDguNzIgQzQ3Ni45MiA4Ljg3IDQ5Mi4zMSA4Ljg4IDUwNy42OSA4Ljg5IEM1MjMuMDggOC44OSA1MzguNDYgOC44MiA1NTMuODUgOC43NyBDNTY5LjIzIDguNzIgNTg0LjYyIDguNjggNjAwLjAwIDguNTcgQzYxNS4zOCA4LjQ2IDYzMC43NyA4LjIyIDY0Ni4xNSA4LjExIEM2NjEuNTQgOC4wMCA2NzYuOTIgNy44OCA2OTIuMzEgNy44OSBDNzA3LjY5IDcuOTAgNzIzLjA4IDguMDMgNzM4LjQ2IDguMTUgQzc1My44NSA4LjI4IDc2OS4yMyA4LjQ3IDc4NC42MiA4LjY0IEM4MDAuMDAgOC44MCA4MTUuMzggOS4xMCA4MzAuNzcgOS4xMiBDODQ2LjE1IDkuMTQgODYxLjU0IDguODkgODc2LjkyIDguNzcgQzg5Mi4zMSA4LjY1IDkwNy42OSA4LjUzIDkyMy4wOCA4LjQwIEM5MzguNDYgOC4yNyA5NTMuODUgOC4xMSA5NjkuMjMgNy45OCBDOTg0LjYyIDcuODYgMTAwMC4wMCA3LjYyIDEwMTUuMzggNy42NSBDMTAzMC43NyA3LjY3IDEwNDYuMTUgNy45NyAxMDYxLjU0IDguMTIgQzEwNzYuOTIgOC4yOCAxMDkyLjMxIDguNDUgMTEwNy42OSA4LjU4IEMxMTIzLjA4IDguNzIgMTEzOC40NiA4Ljg1IDExNTMuODUgOC45MyBDMTE2OS4yMyA5LjAxIDExOTIuMzEgOS4wNCAxMjAwLjAwIDkuMDYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5QzlGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDEwLjMzIEM3LjY5IDEwLjM4IDMwLjc3IDEwLjQ4IDQ2LjE1IDEwLjYzIEM2MS41NCAxMC43OCA3Ni45MiAxMS4xMiA5Mi4zMSAxMS4yMyBDMTA3LjY5IDExLjM1IDEyMy4wOCAxMS4zMSAxMzguNDYgMTEuMzEgQzE1My44NSAxMS4zMSAxNjkuMjMgMTEuMzUgMTg0LjYyIDExLjIzIEMyMDAuMDAgMTEuMTIgMjE1LjM4IDEwLjgzIDIzMC43NyAxMC42NCBDMjQ2LjE1IDEwLjQ1IDI2MS41NCAxMC4xNCAyNzYuOTIgMTAuMDcgQzI5Mi4zMSAxMC4wMCAzMDcuNjkgMTAuMTUgMzIzLjA4IDEwLjI0IEMzMzguNDYgMTAuMzQgMzUzLjg1IDEwLjQ1IDM2OS4yMyAxMC42MyBDMzg0LjYyIDEwLjgxIDQwMC4wMCAxMS4xNyA0MTUuMzggMTEuMzIgQzQzMC43NyAxMS40OCA0NDYuMTUgMTEuNjEgNDYxLjU0IDExLjU3IEM0NzYuOTIgMTEuNTMgNDkyLjMxIDExLjI3IDUwNy42OSAxMS4wOSBDNTIzLjA4IDEwLjkwIDUzOC40NiAxMC42MSA1NTMuODUgMTAuNDcgQzU2OS4yMyAxMC4zMyA1ODQuNjIgMTAuMjcgNjAwLjAwIDEwLjI2IEM2MTUuMzggMTAuMjQgNjMwLjc3IDEwLjI4IDY0Ni4xNSAxMC4zOCBDNjYxLjU0IDEwLjQ4IDY3Ni45MiAxMC43MCA2OTIuMzEgMTAuODYgQzcwNy42OSAxMS4wMiA3MjMuMDggMTEuMjQgNzM4LjQ2IDExLjM0IEM3NTMuODUgMTEuNDMgNzY5LjIzIDExLjQ5IDc4NC42MiAxMS40NCBDODAwLjAwIDExLjM5IDgxNS4zOCAxMS4xOSA4MzAuNzcgMTEuMDMgQzg0Ni4xNSAxMC44NyA4NjEuNTQgMTAuNjEgODc2LjkyIDEwLjQ4IEM4OTIuMzEgMTAuMzYgOTA3LjY5IDEwLjMwIDkyMy4wOCAxMC4yOCBDOTM4LjQ2IDEwLjI3IDk1My44NSAxMC4zMCA5NjkuMjMgMTAuMzkgQzk4NC42MiAxMC40NyAxMDAwLjAwIDEwLjY0IDEwMTUuMzggMTAuNzkgQzEwMzAuNzcgMTAuOTQgMTA0Ni4xNSAxMS4xOSAxMDYxLjU0IDExLjMxIEMxMDc2LjkyIDExLjQyIDEwOTIuMzEgMTEuNTIgMTEwNy42OSAxMS40OCBDMTEyMy4wOCAxMS40MyAxMTM4LjQ2IDExLjIyIDExNTMuODUgMTEuMDUgQzExNjkuMjMgMTAuODggMTE5Mi4zMSAxMC41NiAxMjAwLjAwIDEwLjQ3IiBmaWxsPSJub25lIiBzdHJva2U9IiNGRjYyQzQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L2c+PC9zdmc+");
+  --rule-v: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMiAxMjAwJyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSdub25lJz48ZyB0cmFuc2Zvcm09J21hdHJpeCgwIDEgMSAwIDAgMCknPjxwYXRoIGQ9Ik0wLjAwIDEuMjUgQzcuNjkgMS4zNCAzMC43NyAxLjczIDQ2LjE1IDEuODEgQzYxLjU0IDEuOTAgNzYuOTIgMS44MiA5Mi4zMSAxLjc0IEMxMDcuNjkgMS42NyAxMjMuMDggMS40OSAxMzguNDYgMS4zNCBDMTUzLjg1IDEuMTkgMTY5LjIzIDAuOTUgMTg0LjYyIDAuODQgQzIwMC4wMCAwLjczIDIxNS4zOCAwLjcxIDIzMC43NyAwLjY3IEMyNDYuMTUgMC42MyAyNjEuNTQgMC41NCAyNzYuOTIgMC42MiBDMjkyLjMxIDAuNzAgMzA3LjY5IDAuOTYgMzIzLjA4IDEuMTYgQzMzOC40NiAxLjM1IDM1My44NSAxLjY5IDM2OS4yMyAxLjc5IEMzODQuNjIgMS44OSA0MDAuMDAgMS44MCA0MTUuMzggMS43NSBDNDMwLjc3IDEuNzEgNDQ2LjE1IDEuNjIgNDYxLjU0IDEuNDkgQzQ3Ni45MiAxLjM3IDQ5Mi4zMSAxLjE1IDUwNy42OSAxLjAyIEM1MjMuMDggMC44OSA1MzguNDYgMC43OCA1NTMuODUgMC43MyBDNTY5LjIzIDAuNjggNTg0LjYyIDAuNjYgNjAwLjAwIDAuNzMgQzYxNS4zOCAwLjgwIDYzMC43NyAxLjAwIDY0Ni4xNSAxLjE2IEM2NjEuNTQgMS4zMiA2NzYuOTIgMS41OCA2OTIuMzEgMS42OSBDNzA3LjY5IDEuNzkgNzIzLjA4IDEuODIgNzM4LjQ2IDEuNzkgQzc1My44NSAxLjc1IDc2OS4yMyAxLjYzIDc4NC42MiAxLjQ3IEM4MDAuMDAgMS4zMSA4MTUuMzggMC45NiA4MzAuNzcgMC44MyBDODQ2LjE1IDAuNzAgODYxLjU0IDAuNzIgODc2LjkyIDAuNjggQzg5Mi4zMSAwLjY1IDkwNy42OSAwLjUxIDkyMy4wOCAwLjYxIEM5MzguNDYgMC43MiA5NTMuODUgMS4xNiA5NjkuMjMgMS4zMiBDOTg0LjYyIDEuNDggMTAwMC4wMCAxLjQ5IDEwMTUuMzggMS41NiBDMTAzMC43NyAxLjYzIDEwNDYuMTUgMS43NyAxMDYxLjU0IDEuNzQgQzEwNzYuOTIgMS43MiAxMDkyLjMxIDEuNTYgMTEwNy42OSAxLjQyIEMxMTIzLjA4IDEuMjggMTEzOC40NiAxLjA0IDExNTMuODUgMC45MSBDMTE2OS4yMyAwLjc3IDExOTIuMzEgMC42NiAxMjAwLjAwIDAuNjEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0RDRThEMSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDQuMzQgQzcuNjkgNC4zMSAzMC43NyA0LjI4IDQ2LjE1IDQuMTggQzYxLjU0IDQuMDkgNzYuOTIgMy45MSA5Mi4zMSAzLjc0IEMxMDcuNjkgMy41NyAxMjMuMDggMy4yNyAxMzguNDYgMy4xNiBDMTUzLjg1IDMuMDUgMTY5LjIzIDMuMDkgMTg0LjYyIDMuMTAgQzIwMC4wMCAzLjExIDIxNS4zOCAzLjA3IDIzMC43NyAzLjIyIEMyNDYuMTUgMy4zNiAyNjEuNTQgMy44MiAyNzYuOTIgMy45OCBDMjkyLjMxIDQuMTMgMzA3LjY5IDQuMTQgMzIzLjA4IDQuMTYgQzMzOC40NiA0LjE4IDM1My44NSA0LjE4IDM2OS4yMyA0LjA3IEMzODQuNjIgMy45NyA0MDAuMDAgMy42NyA0MTUuMzggMy41MyBDNDMwLjc3IDMuMzggNDQ2LjE1IDMuMjUgNDYxLjU0IDMuMTggQzQ3Ni45MiAzLjEyIDQ5Mi4zMSAzLjA4IDUwNy42OSAzLjEzIEM1MjMuMDggMy4xOCA1MzguNDYgMy4zNSA1NTMuODUgMy40NyBDNTY5LjIzIDMuNTggNTg0LjYyIDMuNjkgNjAwLjAwIDMuODAgQzYxNS4zOCAzLjkxIDYzMC43NyA0LjA2IDY0Ni4xNSA0LjExIEM2NjEuNTQgNC4xNyA2NzYuOTIgNC4yMCA2OTIuMzEgNC4xMiBDNzA3LjY5IDQuMDQgNzIzLjA4IDMuNzggNzM4LjQ2IDMuNjIgQzc1My44NSAzLjQ2IDc2OS4yMyAzLjI1IDc4NC42MiAzLjE0IEM4MDAuMDAgMy4wMyA4MTUuMzggMi45MyA4MzAuNzcgMi45OCBDODQ2LjE1IDMuMDQgODYxLjU0IDMuMzAgODc2LjkyIDMuNDUgQzg5Mi4zMSAzLjYwIDkwNy42OSAzLjc3IDkyMy4wOCAzLjg4IEM5MzguNDYgMy45OCA5NTMuODUgNC4wMyA5NjkuMjMgNC4wNyBDOTg0LjYyIDQuMTIgMTAwMC4wMCA0LjI0IDEwMTUuMzggNC4xNSBDMTAzMC43NyA0LjA3IDEwNDYuMTUgMy43MyAxMDYxLjU0IDMuNTcgQzEwNzYuOTIgMy40MSAxMDkyLjMxIDMuMjggMTEwNy42OSAzLjE5IEMxMTIzLjA4IDMuMDkgMTEzOC40NiAyLjk0IDExNTMuODUgMi45OCBDMTE2OS4yMyAzLjAyIDExOTIuMzEgMy4zMyAxMjAwLjAwIDMuNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGQjAwMCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDYuMjMgQzcuNjkgNi4xNiAzMC43NyA1Ljk2IDQ2LjE1IDUuODEgQzYxLjU0IDUuNjcgNzYuOTIgNS40NiA5Mi4zMSA1LjM5IEMxMDcuNjkgNS4zMSAxMjMuMDggNS4yNyAxMzguNDYgNS4zNiBDMTUzLjg1IDUuNDUgMTY5LjIzIDUuNzUgMTg0LjYyIDUuOTQgQzIwMC4wMCA2LjEzIDIxNS4zOCA2LjM4IDIzMC43NyA2LjUwIEMyNDYuMTUgNi42MiAyNjEuNTQgNi42OSAyNzYuOTIgNi42NSBDMjkyLjMxIDYuNjEgMzA3LjY5IDYuNDUgMzIzLjA4IDYuMjggQzMzOC40NiA2LjExIDM1My44NSA1LjgwIDM2OS4yMyA1LjYzIEMzODQuNjIgNS40NiA0MDAuMDAgNS4yOCA0MTUuMzggNS4yNyBDNDMwLjc3IDUuMjcgNDQ2LjE1IDUuNDkgNDYxLjU0IDUuNTggQzQ3Ni45MiA1LjY3IDQ5Mi4zMSA1LjY1IDUwNy42OSA1LjgyIEM1MjMuMDggNS45OSA1MzguNDYgNi41MCA1NTMuODUgNi42MSBDNTY5LjIzIDYuNzIgNTg0LjYyIDYuNTUgNjAwLjAwIDYuNDggQzYxNS4zOCA2LjQxIDYzMC43NyA2LjI5IDY0Ni4xNSA2LjE4IEM2NjEuNTQgNi4wNyA2NzYuOTIgNS45NSA2OTIuMzEgNS44MyBDNzA3LjY5IDUuNzEgNzIzLjA4IDUuNTAgNzM4LjQ2IDUuNDUgQzc1My44NSA1LjM5IDc2OS4yMyA1LjQyIDc4NC42MiA1LjUyIEM4MDAuMDAgNS42MSA4MTUuMzggNS44NSA4MzAuNzcgNi4wMyBDODQ2LjE1IDYuMjEgODYxLjU0IDYuNDkgODc2LjkyIDYuNjEgQzg5Mi4zMSA2LjczIDkwNy42OSA2LjgwIDkyMy4wOCA2Ljc0IEM5MzguNDYgNi42OCA5NTMuODUgNi40MSA5NjkuMjMgNi4yNCBDOTg0LjYyIDYuMDcgMTAwMC4wMCA1Ljg2IDEwMTUuMzggNS43MiBDMTAzMC43NyA1LjU4IDEwNDYuMTUgNS40NiAxMDYxLjU0IDUuNDEgQzEwNzYuOTIgNS4zNSAxMDkyLjMxIDUuMjcgMTEwNy42OSA1LjM2IEMxMTIzLjA4IDUuNDUgMTEzOC40NiA1Ljc0IDExNTMuODUgNS45NCBDMTE2OS4yMyA2LjE0IDExOTIuMzEgNi40NyAxMjAwLjAwIDYuNTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5RkY2QSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDcuOTcgQzcuNjkgNy45MyAzMC43NyA3Ljc4IDQ2LjE1IDcuNzcgQzYxLjU0IDcuNzUgNzYuOTIgNy43NiA5Mi4zMSA3LjkwIEMxMDcuNjkgOC4wNSAxMjMuMDggOC40NyAxMzguNDYgOC42MyBDMTUzLjg1IDguNzkgMTY5LjIzIDguODMgMTg0LjYyIDguODYgQzIwMC4wMCA4Ljg5IDIxNS4zOCA4Ljg4IDIzMC43NyA4LjgwIEMyNDYuMTUgOC43MyAyNjEuNTQgOC41NiAyNzYuOTIgOC40MiBDMjkyLjMxIDguMjcgMzA3LjY5IDguMDQgMzIzLjA4IDcuOTQgQzMzOC40NiA3Ljg0IDM1My44NSA3Ljc5IDM2OS4yMyA3LjgzIEMzODQuNjIgNy44OCA0MDAuMDAgOC4wNiA0MTUuMzggOC4yMSBDNDMwLjc3IDguMzYgNDQ2LjE1IDguNjEgNDYxLjU0IDguNzIgQzQ3Ni45MiA4LjgzIDQ5Mi4zMSA4Ljg4IDUwNy42OSA4Ljg5IEM1MjMuMDggOC44OSA1MzguNDYgOC44MiA1NTMuODUgOC43NyBDNTY5LjIzIDguNzIgNTg0LjYyIDguNjggNjAwLjAwIDguNTcgQzYxNS4zOCA4LjQ2IDYzMC43NyA4LjIyIDY0Ni4xNSA4LjExIEM2NjEuNTQgOC4wMCA2NzYuOTIgNy44OCA2OTIuMzEgNy44OSBDNzA3LjY5IDcuOTAgNzIzLjA4IDguMDMgNzM4LjQ2IDguMTUgQzc1My44NSA4LjI4IDc2OS4yMyA4LjQ3IDc4NC42MiA4LjY0IEM4MDAuMDAgOC44MCA4MTUuMzggOS4xMCA4MzAuNzcgOS4xMiBDODQ2LjE1IDkuMTQgODYxLjU0IDguODkgODc2LjkyIDguNzcgQzg5Mi4zMSA4LjY1IDkwNy42OSA4LjUzIDkyMy4wOCA4LjQwIEM5MzguNDYgOC4yNyA5NTMuODUgOC4xMSA5NjkuMjMgNy45OCBDOTg0LjYyIDcuODYgMTAwMC4wMCA3LjYyIDEwMTUuMzggNy42NSBDMTAzMC43NyA3LjY3IDEwNDYuMTUgNy45NyAxMDYxLjU0IDguMTIgQzEwNzYuOTIgOC4yOCAxMDkyLjMxIDguNDUgMTEwNy42OSA4LjU4IEMxMTIzLjA4IDguNzIgMTEzOC40NiA4Ljg1IDExNTMuODUgOC45MyBDMTE2OS4yMyA5LjAxIDExOTIuMzEgOS4wNCAxMjAwLjAwIDkuMDYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5QzlGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0wLjAwIDEwLjMzIEM3LjY5IDEwLjM4IDMwLjc3IDEwLjQ4IDQ2LjE1IDEwLjYzIEM2MS41NCAxMC43OCA3Ni45MiAxMS4xMiA5Mi4zMSAxMS4yMyBDMTA3LjY5IDExLjM1IDEyMy4wOCAxMS4zMSAxMzguNDYgMTEuMzEgQzE1My44NSAxMS4zMSAxNjkuMjMgMTEuMzUgMTg0LjYyIDExLjIzIEMyMDAuMDAgMTEuMTIgMjE1LjM4IDEwLjgzIDIzMC43NyAxMC42NCBDMjQ2LjE1IDEwLjQ1IDI2MS41NCAxMC4xNCAyNzYuOTIgMTAuMDcgQzI5Mi4zMSAxMC4wMCAzMDcuNjkgMTAuMTUgMzIzLjA4IDEwLjI0IEMzMzguNDYgMTAuMzQgMzUzLjg1IDEwLjQ1IDM2OS4yMyAxMC42MyBDMzg0LjYyIDEwLjgxIDQwMC4wMCAxMS4xNyA0MTUuMzggMTEuMzIgQzQzMC43NyAxMS40OCA0NDYuMTUgMTEuNjEgNDYxLjU0IDExLjU3IEM0NzYuOTIgMTEuNTMgNDkyLjMxIDExLjI3IDUwNy42OSAxMS4wOSBDNTIzLjA4IDEwLjkwIDUzOC40NiAxMC42MSA1NTMuODUgMTAuNDcgQzU2OS4yMyAxMC4zMyA1ODQuNjIgMTAuMjcgNjAwLjAwIDEwLjI2IEM2MTUuMzggMTAuMjQgNjMwLjc3IDEwLjI4IDY0Ni4xNSAxMC4zOCBDNjYxLjU0IDEwLjQ4IDY3Ni45MiAxMC43MCA2OTIuMzEgMTAuODYgQzcwNy42OSAxMS4wMiA3MjMuMDggMTEuMjQgNzM4LjQ2IDExLjM0IEM3NTMuODUgMTEuNDMgNzY5LjIzIDExLjQ5IDc4NC42MiAxMS40NCBDODAwLjAwIDExLjM5IDgxNS4zOCAxMS4xOSA4MzAuNzcgMTEuMDMgQzg0Ni4xNSAxMC44NyA4NjEuNTQgMTAuNjEgODc2LjkyIDEwLjQ4IEM4OTIuMzEgMTAuMzYgOTA3LjY5IDEwLjMwIDkyMy4wOCAxMC4yOCBDOTM4LjQ2IDEwLjI3IDk1My44NSAxMC4zMCA5NjkuMjMgMTAuMzkgQzk4NC42MiAxMC40NyAxMDAwLjAwIDEwLjY0IDEwMTUuMzggMTAuNzkgQzEwMzAuNzcgMTAuOTQgMTA0Ni4xNSAxMS4xOSAxMDYxLjU0IDExLjMxIEMxMDc2LjkyIDExLjQyIDEwOTIuMzEgMTEuNTIgMTEwNy42OSAxMS40OCBDMTEyMy4wOCAxMS40MyAxMTM4LjQ2IDExLjIyIDExNTMuODUgMTEuMDUgQzExNjkuMjMgMTAuODggMTE5Mi4zMSAxMC41NiAxMjAwLjAwIDEwLjQ3IiBmaWxsPSJub25lIiBzdHJva2U9IiNGRjYyQzQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L2c+PC9zdmc+");
 
   color-scheme: dark;
 }
@@ -340,7 +341,7 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   padding: clamp(64px, 12vw, 120px) clamp(20px, 5vw, 56px) 80px;
   max-width: var(--wide); margin: 0 auto;
 }
-/* the abstract wireframe sits behind the hero copy, scoped to this section
+/* the CRT workbench scene sits behind the hero copy, scoped to this section
    only — not a full-page background. Swaps to a plain gradient (no canvas,
    no WebGL context ever created) under reduced motion or without WebGL;
    see initHeroScene(). */
@@ -349,17 +350,19 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
   width: 100%; height: 100%; display: block; pointer-events: none;
 }
 .hero-scene.is-gradient{
-  background: radial-gradient(ellipse 70% 60% at 78% 22%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%);
+  background:
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--text) 7%, transparent) 0px, transparent 1px, transparent 3px),
+    radial-gradient(ellipse 70% 60% at 78% 22%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%);
 }
 .hero-inner{
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: end;
 }
-@media (max-width: 860px){ .hero-inner{ grid-template-columns: 1fr; } }
-/* the copy gets its own laid card, same idea as the photo mount below —
-   legible over the moving wireframe in both themes, not a generic dark
-   glass panel that would fight the light theme. */
+/* the copy gets its own laid card, legible over the CRT scene behind it in
+   both themes — deliberately capped narrower than the hero so the monitor
+   has the right two-thirds of the scene to itself rather than being pushed
+   off to one side. */
 .hero-text{
+  max-width: 540px;
   padding: clamp(20px, 4vw, 32px);
   border: 1.5px solid var(--line-soft); border-radius: var(--sketch-lg);
   background: color-mix(in srgb, var(--bg) 74%, transparent);
@@ -412,28 +415,43 @@ html[data-theme="light"] .theme-toggle .icon-moon{ opacity: 1; transform: none; 
 }
 
 /* =========================================================
-   HERO PORTRAIT — the one place the page raises its voice.
-   A print laid on the page: paper mount, hand-drawn edge, a
-   half-degree off square, lifted just enough to cast a shadow.
+   HERO PORTRAIT — now a small photo taped to the corner of the
+   workbench rather than a competing panel, so the CRT scene
+   behind the text keeps the rest of the hero to itself.
    ========================================================= */
 .hero-photo{
-  justify-self: center; width: 100%; max-width: 320px;
+  position: relative; z-index: 1;
+  width: 128px; margin: 28px 0 0 auto;
   background: var(--surface);
   border: 1.5px solid var(--line);
-  border-radius: var(--sketch-lg);
-  padding: 12px;
+  border-radius: var(--sketch-md);
+  padding: 8px;
   box-shadow: var(--shadow);
-  transform: rotate(-0.55deg);
+  transform: rotate(-2.5deg);
   opacity: 0; animation: rise 0.7s 0.30s ease forwards;
+}
+@media (min-width: 641px){
+  .hero-photo{ position: absolute; right: 2px; bottom: -46px; margin: 0; }
+}
+/* two strips of ribbon-cable-colored tape, like a photo stuck to the edge
+   of the monitor rather than a print laid on paper */
+.hero-photo::before, .hero-photo::after{
+  content: ""; position: absolute; width: 34px; height: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.hero-photo::before{
+  top: -7px; left: 14px; transform: rotate(-7deg);
+  background: color-mix(in srgb, var(--wire-blue) 60%, transparent);
+}
+.hero-photo::after{
+  bottom: -7px; right: 10px; transform: rotate(5deg);
+  background: color-mix(in srgb, var(--wire-magenta) 60%, transparent);
 }
 .hero-photo img{
   display: block; width: 100%; height: auto;
-  border-radius: var(--sketch-md);
+  border-radius: 2px;
   /* the print itself, very slightly counter-rotated inside its mount */
   transform: rotate(0.3deg);
-}
-@media (max-width: 860px){
-  .hero-photo{ max-width: 220px; justify-self: start; }
 }
 
 /* metrics — moved out of the hero and set as a row of figures pencilled
@@ -813,12 +831,12 @@ a:focus-visible, button:focus-visible{
         <picture>
           <source type="image/webp"
                   srcset="portrait-400.webp 400w, portrait-600.webp 600w, portrait.webp 760w"
-                  sizes="(max-width: 860px) 196px, 296px">
-          <img src="portrait-600.jpg"
+                  sizes="128px">
+          <img src="portrait-400.jpg"
                srcset="portrait-400.jpg 400w, portrait-600.jpg 600w, portrait.jpg 760w"
-               sizes="(max-width: 860px) 196px, 296px"
+               sizes="128px"
                width="760" height="760"
-               alt="Mohankumar Marimuthu" fetchpriority="high" decoding="async">
+               alt="Mohankumar Marimuthu" decoding="async">
         </picture>
       </figure>
     </div>
@@ -1264,12 +1282,16 @@ function initMagneticButton(){
 }
 
 /* =========================================================
-   HERO SCENE — an abstract wireframe that drifts toward the
-   cursor, scoped to the hero section only. Never created at
-   all under reduced motion or without WebGL (falls back to
-   the plain CSS gradient in .hero-scene.is-gradient instead);
-   paused via IntersectionObserver once scrolled out of view
-   and whenever the tab is hidden.
+   HERO SCENE — "the workbench": a CRT monitor and keyboard on
+   a desk, screen lit with a live boot readout, a ribbon cable
+   trailing off the back. The one place the page raises its
+   voice into full color instead of ink. Tilts gently toward
+   the cursor rather than spinning on its own — it's furniture,
+   not a floating logo. Never created at all under reduced
+   motion or without WebGL (falls back to the plain CSS gradient
+   in .hero-scene.is-gradient instead); paused via
+   IntersectionObserver once scrolled out of view and whenever
+   the tab is hidden.
    ========================================================= */
 async function initHeroScene(){
   const canvas = document.getElementById("heroScene");
@@ -1296,22 +1318,196 @@ async function initHeroScene(){
     return;
   }
 
-  const readAccent = () => new THREE.Color(
-    getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2A4E76"
-  );
+  const readVar = (name, fallback) =>
+    (getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback);
+  const readColor = (name, fallback) => new THREE.Color(readVar(name, fallback));
 
+  // ---- screen content: a small live "boot readout" drawn to a canvas
+  // texture, not a video or a sprite sheet. Typed once, then left with a
+  // blinking cursor and a slow scope trace — a nod to the signal-vs-noise
+  // work in the copy above, not a generic Matrix-code cliché.
+  const screenCanvas = document.createElement("canvas");
+  screenCanvas.width = 512; screenCanvas.height = 320;
+  const sctx = screenCanvas.getContext("2d");
+  const screenTexture = new THREE.CanvasTexture(screenCanvas);
+  screenTexture.colorSpace = THREE.SRGBColorSpace;
+
+  const bootLines = [
+    "guest@mohan:~$ whoami",
+    "mohankumar marimuthu",
+    "guest@mohan:~$ status",
+    "open to ai/ml roles"
+  ];
+  const fullText = bootLines.join("\n");
+  let typedChars = 0;
+  const typeStart = performance.now();
+  const msPerChar = 34;
+
+  function drawScreen(tSec){
+    const w = screenCanvas.width, h = screenCanvas.height;
+    sctx.fillStyle = "#0c130d";
+    sctx.fillRect(0, 0, w, h);
+
+    typedChars = Math.min(fullText.length, Math.floor((performance.now() - typeStart) / msPerChar));
+    const shown = fullText.slice(0, typedChars).split("\n");
+
+    sctx.font = "22px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+    sctx.textBaseline = "top";
+    sctx.fillStyle = "#57ff8e";
+    sctx.shadowColor = "#39ff6a";
+    sctx.shadowBlur = 8;
+    let y = 26;
+    shown.forEach((line) => { sctx.fillText(line, 36, y); y += 34; });
+
+    // blinking cursor after the last typed line
+    if (typedChars >= fullText.length){
+      const lastLine = shown[shown.length - 1] || "";
+      const cx = 36 + sctx.measureText(lastLine).width + 10;
+      if (Math.floor(tSec * 1.8) % 2 === 0){
+        sctx.fillRect(cx, y - 30, 12, 24);
+      }
+    }
+    sctx.shadowBlur = 0;
+
+    // a slow oscilloscope trace along the bottom third — ambient motion
+    // that keeps the screen feeling "on" without competing with the text
+    sctx.strokeStyle = "rgba(87,255,142,0.55)";
+    sctx.lineWidth = 2;
+    sctx.beginPath();
+    const traceY = h - 46;
+    for (let x = 0; x <= w; x += 6){
+      const n = Math.sin(x * 0.045 + tSec * 1.6) * 10 + Math.sin(x * 0.11 + tSec * 2.3) * 4;
+      if (x === 0) sctx.moveTo(x, traceY + n); else sctx.lineTo(x, traceY + n);
+    }
+    sctx.stroke();
+
+    // scanlines
+    sctx.fillStyle = "rgba(0,0,0,0.16)";
+    for (let sy = 0; sy < h; sy += 4) sctx.fillRect(0, sy, w, 1);
+
+    screenTexture.needsUpdate = true;
+  }
+  drawScreen(0);
+
+  // ---- scene ----
+  // the rig sits right-of-center: the hero copy is capped to ~540px on the
+  // left, so the monitor gets the freed-up right two-thirds to itself
+  // instead of being centered under the text card.
+  const RIG_X = 2.5;
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.z = 6;
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  camera.position.set(0, 0.8, 7.0);
+  // fixed regardless of RIG_X — the point is to move the rig away from the
+  // text card in screen space, which a lookAt that tracks it would undo
+  camera.lookAt(0.6, 0.1, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-  const geometry = new THREE.IcosahedronGeometry(2.2, 2);
-  const basePositions = geometry.attributes.position.array.slice();
-  const material = new THREE.MeshBasicMaterial({ color: readAccent(), wireframe: true, transparent: true, opacity: 0.55 });
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  const rig = new THREE.Group();
+  rig.position.x = RIG_X;
+  rig.scale.setScalar(1.22);
+  scene.add(rig);
+
+  const caseMat = new THREE.MeshStandardMaterial({ color: readColor("--case-3d", "#EDE6D3"), roughness: 0.85, metalness: 0.04 });
+  const bezelMat = new THREE.MeshStandardMaterial({ color: "#14170f", roughness: 0.4, metalness: 0.1 });
+  const deskMat = new THREE.MeshStandardMaterial({ color: readColor("--desk-3d", "#C9BE9E"), roughness: 0.9, metalness: 0.02 });
+  const keyMat = new THREE.MeshStandardMaterial({ color: readColor("--key-3d", "#E7DFC9"), roughness: 0.75, metalness: 0.04 });
+
+  // desk
+  const desk = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.16, 3.6), deskMat);
+  desk.position.set(0, -1.34, 0.2);
+  rig.add(desk);
+
+  // monitor stand + body
+  const stand = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.28, 0.5), caseMat);
+  stand.position.set(0, -1.12, -0.35);
+  rig.add(stand);
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.9, 1.5), caseMat);
+  body.position.set(0, 0.1, -0.35);
+  rig.add(body);
+
+  const bezel = new THREE.Mesh(new THREE.BoxGeometry(2.16, 1.5, 0.08), bezelMat);
+  bezel.position.set(0, 0.14, 0.42);
+  rig.add(bezel);
+
+  const screen = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.86, 1.24),
+    new THREE.MeshBasicMaterial({ map: screenTexture })
+  );
+  screen.position.set(0, 0.14, 0.465);
+  rig.add(screen);
+
+  const led = new THREE.Mesh(
+    new THREE.SphereGeometry(0.035, 12, 12),
+    new THREE.MeshStandardMaterial({ color: "#39ff6a", emissive: "#39ff6a", emissiveIntensity: 2.2 })
+  );
+  led.position.set(0.92, -0.5, 0.46);
+  rig.add(led);
+
+  // keyboard deck + keys (instanced, tiny per-key jitter to match the
+  // page's hand-drawn wobble rather than a perfectly uniform grid)
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.12, 0.95), caseMat);
+  deck.position.set(0, -1.17, 1.15);
+  rig.add(deck);
+
+  const cols = 11, rows = 4;
+  const keyGeo = new THREE.BoxGeometry(0.17, 0.06, 0.17);
+  const keys = new THREE.InstancedMesh(keyGeo, keyMat, cols * rows);
+  const dummy = new THREE.Object3D();
+  let ki = 0;
+  for (let r = 0; r < rows; r++){
+    for (let c = 0; c < cols; c++){
+      const jitter = (Math.sin(r * 12.9 + c * 78.2) * 0.5 + 0.5);
+      dummy.position.set(
+        (c - (cols - 1) / 2) * 0.205,
+        -1.08 + jitter * 0.01,
+        0.82 + r * 0.205
+      );
+      dummy.rotation.y = (jitter - 0.5) * 0.06;
+      dummy.updateMatrix();
+      keys.setMatrixAt(ki++, dummy.matrix);
+    }
+  }
+  rig.add(keys);
+
+  // ribbon cable — five strands, the site's rule motif in 3D
+  const wireColors = ["--text", "--accent-2", "--accent", "--wire-blue", "--wire-magenta"]
+    .map((v, i) => readColor(v, ["#241F16", "#B25E00", "#1C7A43", "#2D6FB0", "#B0398F"][i]));
+  const cableGroup = new THREE.Group();
+  wireColors.forEach((color, i) => {
+    const off = (i - 2) * 0.045;
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.3 + off * 0.4, -0.3, -1.05),
+      new THREE.Vector3(0.9 + off, -0.9, -1.3 + off * 0.5),
+      new THREE.Vector3(1.8 + off, -1.28, -0.4),
+      new THREE.Vector3(2.7 + off * 1.4, -1.3, 0.9),
+      new THREE.Vector3(3.4 + off * 1.6, -1.05, 1.6)
+    ]);
+    const tube = new THREE.Mesh(
+      new THREE.TubeGeometry(curve, 48, 0.022, 6, false),
+      new THREE.MeshStandardMaterial({ color, roughness: 0.6 })
+    );
+    cableGroup.add(tube);
+  });
+  rig.add(cableGroup);
+
+  // lighting: a warm fill plus a green bleed from the screen itself
+  scene.add(new THREE.HemisphereLight(0xfff3e0, 0x2a2c22, 1.15));
+  const key = new THREE.DirectionalLight(0xffffff, 0.65);
+  key.position.set(2, 3, 4);
+  scene.add(key);
+  const screenGlow = new THREE.PointLight(0x39ff6a, 1.1, 3.2, 2);
+  screenGlow.position.set(0, 0.1, 1.1);
+  scene.add(screenGlow);
+
+  function retint(){
+    caseMat.color = readColor("--case-3d", "#EDE6D3");
+    keyMat.color = readColor("--key-3d", "#E7DFC9");
+    deskMat.color = readColor("--desk-3d", "#C9BE9E");
+  }
+  document.getElementById("themeToggle")?.addEventListener("click", () => setTimeout(retint, 0));
 
   const pointer = { x: 0, y: 0 };
   hero.addEventListener("pointermove", (e) => {
@@ -1325,6 +1521,7 @@ async function initHeroScene(){
     if (r.width === 0 || r.height === 0) return;
     renderer.setSize(r.width, r.height, false);
     camera.aspect = r.width / r.height;
+    camera.position.z = camera.aspect < 0.9 ? 9.0 : 7.0;
     camera.updateProjectionMatrix();
   }
   resize();
@@ -1333,32 +1530,21 @@ async function initHeroScene(){
   let intersecting = true;
   new IntersectionObserver((entries) => { intersecting = entries[0].isIntersecting; }, { threshold: 0.01 }).observe(hero);
 
-  document.getElementById("themeToggle")?.addEventListener("click", () => {
-    setTimeout(() => { material.color = readAccent(); }, 0);
-  });
-
   const clock = new THREE.Clock();
-  const pos = geometry.attributes.position;
+  let rotY = 0, rotX = 0;
 
   function frame(){
     requestAnimationFrame(frame);
     if (document.hidden || !intersecting) return;
 
     const t = clock.getElapsedTime();
+    drawScreen(t);
 
-    // a slow breathing wobble on the vertices — subtle, not a violent morph
-    for (let i = 0; i < pos.count; i++){
-      const ix = i * 3;
-      const bx = basePositions[ix], by = basePositions[ix + 1], bz = basePositions[ix + 2];
-      const wobble = 1 + Math.sin(t * 0.6 + bx * 1.4 + by * 1.1) * 0.035;
-      pos.array[ix] = bx * wobble;
-      pos.array[ix + 1] = by * wobble;
-      pos.array[ix + 2] = bz * wobble;
-    }
-    pos.needsUpdate = true;
-
-    mesh.rotation.y += 0.0022 + pointer.x * 0.001;
-    mesh.rotation.x += (pointer.y * 0.4 - mesh.rotation.x) * 0.02;
+    rotY += (pointer.x * 0.22 - rotY) * 0.045;
+    rotX += (-pointer.y * 0.09 - rotX) * 0.045;
+    rig.rotation.y = rotY;
+    rig.rotation.x = rotX;
+    rig.position.y = Math.sin(t * 0.7) * 0.02;
 
     renderer.render(scene, camera);
   }
